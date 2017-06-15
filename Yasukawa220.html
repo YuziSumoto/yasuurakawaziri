@@ -1,0 +1,112 @@
+<html>
+<head>
+  <style type="text/css">
+    .text  {font-size:XX-LARGE}
+    .button  {font-size:X-LARGE;WIDTH: 200px; HEIGHT:40px}
+    .button2  {font-size:X-LARGE;WIDTH: 400px; HEIGHT:40px}
+		.scr {
+			overflow-y: scroll;   /* スクロール表示 */ 
+			width: 910px;
+			height: 600px;
+			border: 1px double #000000; 
+		}
+  </style>
+	<title>Yasukawa220</title>
+</head>
+
+<body>
+	<form name="Main" action="/Yasukawa220/" method="post" style="font-size:X-LARGE">
+	
+<table border="1"  style="background-color:LightGray">
+  <TR>
+    <TH style="width:80px">
+      氏名
+    </TH>
+    <TH align="left">
+      {{ Kihon.Name|default_if_none:"" }}(
+      {{ Kihon.Kana|default_if_none:"" }})
+			{% ifequal Kihon.Sex 1 %}　男{% endifequal %}
+			{% ifequal Kihon.Sex 2 %}　女{% endifequal %}
+    </TH>
+  </TR>
+</table>
+
+<table border="1"  style="background-color:LightGray">
+	<TR>
+		<TH Width="100px">年月日</TH>
+		<TH Width="200px">病名</TH>
+		<TH Width="200px">医療機関（医師名）連絡先</TH>
+		<TH Width="100px">経過</TH>
+		<TH Width="200px">治療内容・処方</TH>
+		<TH Width="50px">削除</TH>
+	</TR>
+</table>
+<DIV class="scr">
+   <table border="1">
+		<TR> <!-- # 枠幅設定用行なので高さは０ -->
+			<TH Height="0" Width="103px" style="border-style:none"></TH>
+			<TH Height="0" Width="203px" style="border-style:none"></TH>
+			<TH Height="0" Width="203px" style="border-style:none"></TH>
+			<TH Height="0" Width="103px" style="border-style:none"></TH>
+			<TH Height="0" Width="203px" style="border-style:none"></TH>
+			<TH Height="0" Width="53px" style="border-style:none"></TH>
+		</TR>
+	{% for Rec in Snap %} 
+		<TR align="center">
+			<TD>
+				<input type="button" style="WIDTH:97px"
+					value="{{ Rec.Hizuke|date:'Y/m/d' }}"
+					 onclick="location.href='/Yasukawa225/?KihonKey={{ Kihon.key }}&Key={{ Rec.key }}'">
+			</TD>
+			<TD align="left">
+				{{ Rec.Byoumei|default_if_none:"" }}
+			</TD>
+			<TD align="left">
+				{{ Rec.IryoKikan|safe|default_if_none:"" }}
+			</TD>
+			<TD align="left">
+				{{ Rec.Keika|safe|default_if_none:"" }}
+			</TD>
+			<TD align="left">
+				{{ Rec.Naiyo|safe|default_if_none:"" }}
+			</TD>
+			<TD align="left">
+				<input type="submit" style="WIDTH:47px;color:red;" Name="BtnDel{{ Rec.key }}"
+				value = "削除">
+			</TD>
+		</TR>
+	{% endfor %}
+	<TR align="center">
+		<TD colspan="6">
+			<input type="button"  style="WIDTH:850px;color:blue;font-size:LARGE;"
+			value="新規登録" onclick="location.href='/Yasukawa225/?KihonKey={{Kihon.key}}'">
+		</TD>
+	</TR>
+	</table>
+</DIV>
+
+{{  LblMsg }}
+<BR>
+
+	<input type="button" class="button"
+		value="基本情報" onclick="location.href='/Yasukawa200/?Key={{Kihon.key}}'">
+	<input type="button" class="button"
+		value="生活情報" onclick="location.href='/Yasukawa210/?Key={{Kihon.key}}'">
+<!--
+	<input type="button" class="button" disabled
+		value="病歴" onclick="location.href='/Yasukawa220/'">
+-->
+	<input type="button" class="button"
+		value="利用サービス" onclick="location.href='/Yasukawa230/?Key={{Kihon.key}}'">
+　
+	<input type="button" class="button"
+		value="終了" onclick="location.href='/Yasukawa100/'">
+<!--
+<input type="submit" value = "終了" name="BtnKettei" class="button"><BR>
+-->
+
+</form>
+
+</body>
+
+</html>

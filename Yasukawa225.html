@@ -1,0 +1,111 @@
+<html>
+<head>
+  <style type="text/css">
+    .text  {font-size:XX-LARGE}
+    .button  {font-size:X-LARGE;WIDTH: 200px; HEIGHT:40px}
+		.scr {
+			overflow-y: scroll;   /* スクロール表示 */ 
+			width: 200px;
+			height: 200px;
+		}
+  </style>
+
+	<title>Yasukawa225(病歴登録)</title>
+</head>
+
+<body>
+	<form name="Main" action="/Yasukawa225/" method="post" style="font-size:X-LARGE">
+
+<table border="1"  style="background-color:LightGray"> <!-- 基本情報 -->
+  <TR>
+    <TH style="width:80px">
+      氏名
+    </TH>
+    <TH align="left">
+      {{ Kihon.Name|default_if_none:"" }}(
+      {{ Kihon.Kana|default_if_none:"" }})
+			{% ifequal Kihon.Sex 1 %}　男{% endifequal %}
+			{% ifequal Kihon.Sex 2 %}　女{% endifequal %}
+    </TH>
+  </TR>
+</table>
+
+<table border="1">
+
+  <TR style="background-color:lightgray">
+    <TH>年月日</TH>
+    <TH align="left">
+			<input type="date" value="{{ Rec.Hizuke|date:"Y-m-d" }}" name="Hizuke" 
+               style="width:200px;font-size:LARGE"/>
+    </TH>
+  </TR>
+  <TR style="background-color:lightgray">
+    <TH style="width:80px">
+      病名
+    </TH>
+    <TH align="left">
+			<select name="ByoumeiCD" style="width:200px">
+				{% for MstRec in MstByoumei %} 
+					<option value={{ MstRec.CD }}
+						{% if Rec.ByoumeiCD %}{# 指定あり #}
+							{% ifequal Rec.ByoumeiCD MstRec.CD %} selected {% endifequal %}
+						{% else %} {# 未指定 #}
+							{% ifequal MstRec.CD 0  %}{# 0なら選択（ディフォルト） #}
+						    selected
+						  {% endifequal %}
+						{% endif %}
+					>{{ MstRec.Name}}</option>
+				{% endfor %} 
+			</select>
+      <input value="{{ Rec.Byoumei|default_if_none:"" }}" name="Byoumei" style="width:200px"/>
+    </TH>
+  </TR>
+  <TR style="background-color:lightgray">
+    <TH>医療機関（医師名）<BR>連絡先<BR>
+      <input type="text" id="IryoKikanCtr" disabled="disabled" style="width:40px" >/1000
+      <BR>最大1000バイトです。
+		</TH>
+    <TH align="left">
+      <textarea name="IryoKikan" cols=100 rows=10
+       onkeyup="document.getElementById('IryoKikanCtr').value=this.value.length*2"
+       >{{Rec.IryoKikan|default_if_none:""}}</textarea>
+    </TH>
+  </TR>
+  <TR style="background-color:lightgray">
+    <TH>経過<BR>
+      <input type="text" id="KeikaCtr" disabled="disabled" style="width:40px" >/1000
+      <BR>最大1000バイトです。
+    </TH>
+    <TH align="left">
+      <textarea name="Keika" cols=100 rows=10
+       onkeyup="document.getElementById('KeikaCtr').value=this.value.length*2"
+       >{{Rec.Keika|default_if_none:""}}</textarea>
+    </TH>
+  </TR>
+  <TR>
+    <TH style="background-color:lightgray"  valign="middle">
+      治療内容・処方<BR>
+      <input type="text" id="NaiyoCtr" disabled="disabled" style="width:40px" >/1000
+      <BR>最大1000バイトです。<BR><BR>
+    </TH>
+    <TD valign="top" colspan="4">
+      <textarea name="Naiyo" cols=100 rows=10
+        onkeyup="document.getElementById('NaiyoCtr').value=this.value.length*2"
+        >{{Rec.Naiyo|default_if_none:""}}</textarea>
+    </TD>
+  </TR>
+
+</table>
+{{	LblMsg	}}
+<BR>
+
+<input type="button" class="button"
+	value="中止" onclick="location.href='/Yasukawa220/'">
+　
+<input type="submit" value = "決定" name="BtnKettei" class="button"><BR>
+
+</form>
+
+</body>
+
+</html>

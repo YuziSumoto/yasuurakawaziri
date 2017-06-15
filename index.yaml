@@ -10,3 +10,29 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: DatByoureki
+  properties:
+  - name: KihonKey
+  - name: Hizuke
+    direction: desc
+
+- kind: DatByoureki
+  properties:
+  - name: KihonKey
+  - name: Hizuke
+
+- kind: DatService
+  properties:
+  - name: KihonKey
+  - name: CD
+
+- kind: DatService
+  properties:
+  - name: KihonKey
+  - name: Kubun
+  - name: CD
+
+- kind: DatService
+  properties:
+  - name: Kubun
+  - name: CD

@@ -1,0 +1,81 @@
+<html>
+<head>
+  <style type="text/css">
+    .text  {font-size:XX-LARGE}
+    .button  {font-size:X-LARGE;WIDTH: 200px; HEIGHT:40px}
+		.scr {
+			overflow-y: scroll;   /* スクロール表示 */ 
+			width: 200px;
+			height: 200px;
+		}
+  </style>
+
+	<!-- カレンダー表示用 ↓-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css" >
+	<script>
+	  $(function() {
+	    $("#datepicker").datepicker();
+	  });
+	</script>
+	<!-- カレンダー表示用 ↑-->
+
+	<title>Yasukawa235</title>
+</head>
+
+<body>
+	<form name="Main" action="/Yasukawa235/" method="post" style="font-size:X-LARGE">
+
+<table border="1" style="background-color:lightgray">
+  <TR>
+    <TH style="width:80px" rowspan="2">
+      サービス名
+    </TH>
+    <TH align="left">
+			<select name="CD" style="width:400px">
+				{% for MstRec in MstService %} 
+					<option value="{{ MstRec.CD }}"
+						{% if Rec.CD %}{# 指定あり #}
+							{% ifequal Rec.CD MstRec.CD %} selected {% endifequal %}
+						{% else %} {# 未指定 #}
+							{% ifequal MstRec.CD 0  %}{# 0なら選択（ディフォルト） #}
+						    selected
+						  {% endifequal %}
+						{% endif %}
+					>{{ MstRec.Name}}</option>
+				{% endfor %} 
+			</select><BR>
+  </TR>
+  <TR  align="left">
+    <TH style="width:80px">
+			手入力を選択した時のみ有効<BR>
+      <input type="radio" name="Kubun" value="0" 
+				{% ifequal Rec.Kubun 0 %}
+					checked
+				{% endifequal %}
+			>公式
+      <input type="radio" name="Kubun" value="1"
+				{% ifequal Rec.Kubun 1 %}
+					checked
+				{% endifequal %}
+			>非公式
+      <input value="{{ Rec.Name|default_if_none:"" }}" name="Name" style="width:200px"/>
+    </TH>
+  </TR>
+</table>
+<BR>
+{{	LblMsg	}}
+<BR>
+
+<input type="button" class="button"
+		value="中止" onclick="location.href='/Yasukawa230/'">
+　
+<input type="submit" value = "決定" name="BtnKettei" class="button"><BR>
+
+</form>
+
+</body>
+
+</html>

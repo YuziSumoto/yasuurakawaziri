@@ -1,0 +1,45 @@
+<html>
+<head>
+  <style type="text/css">
+    .text  {WIDTH:100px; HEIGHT: 30px;font-size:LARGE}
+    .button  {font-size:XX-LARGE}
+  </style>
+
+	<title>Yasukawa945</title>
+</head>
+
+<body>
+	<form name="Main" action="/Yasukawa945/" method="post">
+
+<TABLE Border="1">
+	<TR>
+		<TH>コード</TH>
+		<TD>
+			<input value="{{ Rec.CD|default_if_none:"" }}" name="CD" class="text" />
+		</TD>
+	</TR>
+	<TR>
+		<TH>名称</TH>
+		<TD>
+			<input value="{{ Rec.Name|default_if_none:"" }}" name="Name" class="text" />
+		</TD>
+	</TR>
+
+</TABLE>
+
+<BR>
+
+	<input type="button" class="button"
+		value="中止" onclick="location.href='/Yasukawa940/'">
+　
+<input type="submit" value = "決定" name="BtnKettei" class="button">
+
+<BR>
+
+<p	class="LblMsg">{{ LblMsg }}</p>
+
+
+</form>
+</body>
+
+</html>

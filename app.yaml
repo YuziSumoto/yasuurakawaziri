@@ -9,9 +9,90 @@ handlers:
   static_files: favicon.ico
   upload: favicon\.ico
 
+# 保存はUTF-8指定しないとエラーになるから注意な
+
+# 日付指定画面
+- url: /Ninchi000/.*
+  script: Ninchi000.app
+
+# 利用者一覧画面
+- url: /Yasukawa100/.*
+  script: Yasukawa100.app
+
+# データ入力画面
+# 基本情報
+- url: /Yasukawa200/.*
+  script: Yasukawa200.app
+# 関連情報
+- url: /Yasukawa210/.*
+  script: Yasukawa210.app
+# 病歴一覧
+- url: /Yasukawa220/.*
+  script: Yasukawa220.app
+# 病歴登録
+- url: /Yasukawa225/.*
+  script: Yasukawa225.app
+# 利用サービス一覧
+- url: /Yasukawa230/.*
+  script: Yasukawa230.app
+# サービス登録
+- url: /Yasukawa235/.*
+  script: Yasukawa235.app
+
+# 統計資料メニュー
+- url: /Yasukawa700/.*
+  script: Yasukawa700.app
+
+# EXCEL出力画面
+- url: /Yasukawa800/.*
+  script: Yasukawa800.app
+
+# マスタメンテメニュー
+- url: /Yasukawa900/.*
+  script: Yasukawa900.app
+# 地域マスタ一覧
+- url: /Yasukawa910/.*
+  script: Yasukawa910.app
+# 地域マスタメンテ
+- url: /Yasukawa915/.*
+  script: Yasukawa915.app
+# 介護度マスタ一覧
+- url: /Yasukawa920/.*
+  script: Yasukawa920.app
+# 介護度マスタメンテ
+- url: /Yasukawa925/.*
+  script: Yasukawa925.app
+# 障害自立度マスタ一覧
+- url: /Yasukawa930/.*
+  script: Yasukawa930.app
+# 障害自立度マスタメンテ
+- url: /Yasukawa935/.*
+  script: Yasukawa935.app
+# 認知症自立度マスタ一覧
+- url: /Yasukawa940/.*
+  script: Yasukawa940.app
+# 認知症自立度マスタメンテ
+- url: /Yasukawa945/.*
+  script: Yasukawa945.app
+# 病名マスタ一覧
+- url: /Yasukawa950/.*
+  script: Yasukawa950.app
+# 病名マスタメンテ
+- url: /Yasukawa955/.*
+  script: Yasukawa955.app
+# サービスマスタ一覧
+- url: /Yasukawa960/.*
+  script: Yasukawa960.app
+# サービスマスタメンテ
+- url: /Yasukawa965/.*
+  script: Yasukawa965.app
+
+# 初画面(日付指定画面)
 - url: .*
-  script: main.app
+  script: Yasukawa000.app
 
 libraries:
 - name: webapp2
   version: "2.5.2"
+
+

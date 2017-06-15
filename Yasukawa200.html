@@ -1,0 +1,227 @@
+<html>
+<head>
+  <style type="text/css">
+    .text  {font-size:XX-LARGE}
+    .button  {font-size:X-LARGE;WIDTH: 200px; HEIGHT:40px}
+		.scr {
+			overflow-y: scroll;   /* スクロール表示 */ 
+			width: 200px;
+			height: 200px;
+		}
+  </style>
+
+	<!-- カレンダー表示用 ↓-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css" >
+	<script>
+	  $(function() {
+	    $("#datepicker").datepicker();
+	  });
+	</script>
+	<!-- カレンダー表示用 ↑-->
+
+	<title>Yasukawa200</title>
+</head>
+
+<body>
+	<form name="Main" action="/Yasukawa200/" method="post" style="font-size:X-LARGE">
+
+<table border="1" style="background-color:lightgray">
+
+  <TR>
+    <TH style="width:80px" rowspan="2">
+      氏名
+    </TH>
+    <TH align="left" rowspan="2">
+      かな氏名<input value="{{ Rec.Kana|default_if_none:"" }}" name="Kana" style="width:200px"/><BR>
+      漢字氏名<input value="{{ Rec.Name|default_if_none:"" }}" name="Name" style="width:200px"/>
+    </TH>
+    <TH style="width:80px">
+      性別
+    </TH>
+    <TH align="left">
+      <input type="radio" name="Sex" value="1"
+				{% if Rec.Sex %}{% else %} checked{% endif %} {# 未指定時 #}
+				{% ifequal Rec.Sex 1 %}checked{% endifequal %}
+			 >男
+      <input type="radio" name="Sex" value="2"
+				{% ifequal Rec.Sex 2 %}checked{% endifequal %}
+ 			>女
+    </TH>
+  </TR>
+  <TR style="background-color:lightgray">
+    <TH>生年月日</TH>
+    <TH align="left">
+      <input value="{{ Rec.Tanzyoubi             }}" name="Tanzyoubi" style="width:200px"/>
+    </TH>
+  </TR>
+  <TR>
+    <TH>
+      住所
+    </TH>
+    <TH align="left">
+			地域
+			<select name="Tiiki" style="width:100px">
+				{% for MstRec in MstTiiki %} 
+					<option value="{{ MstRec.CD }}"
+						{% if Rec.Tiiki %}{# 指定あり #}
+							{% ifequal Rec.Tiiki MstRec.CD %} selected {% endifequal %}
+						{% else %} {# 未指定 #}
+							{% ifequal MstRec.CD 0  %}{# 0なら選択（ディフォルト） #}
+						    selected
+						  {% endifequal %}
+						{% endif %}
+					>{{ MstRec.Name}}</option>
+				{% endfor %} 
+			</select>
+      〒<input value="{{ Rec.Yubin|default_if_none:"" }}" name="Yubin" style="width:100px"/><BR>
+      <textarea name="Zyusyo" cols=40 rows=2>{{Rec.Zyusyo|default_if_none:""}}</textarea>
+    </TH>
+    <TH>
+      電話番号
+    </TH>
+    <TH align="left">
+      <input value="{{ Rec.Tel|default_if_none:"" }}" name="Tel" style="width:200px"/><BR>
+    </TH>
+  </TR>
+
+  <TR>
+    <TH>相談日</TH>
+    <TH align="left">
+      <input type="date" value="{{ Rec.Soudanbi|date:'Y-m-d' }}" name="Soudanbi" style="width:200px"/>
+    </TH>
+    <TH>担当</TH>
+    <TH align="left">
+      <input value="{{ Rec.Tanto|default_if_none:"" }}" name="Tanto" style="width:200px"/>
+    </TH>
+  </TR>
+  <TR>
+    <TH>認定介護度</TH>
+    <TH align="left">
+			<select name="Kaigodo" style="width:100px">
+				{% for MstRec in MstKaigodo %} 
+					<option value="{{ MstRec.CD }}"
+						{% if Rec.Kaigodo %}{# 指定あり #}
+							{% ifequal Rec.Kaigodo MstRec.CD %} selected {% endifequal %}
+						{% else %} {# 未指定 #}
+							{% ifequal MstRec.CD 0  %}{# 0なら選択（ディフォルト） #}
+						    selected
+						  {% endifequal %}
+						{% endif %}
+					>{{ MstRec.Name}}</option>
+				{% endfor %} 
+			</select>
+    </TH>
+    <TH>介護保険</TH>
+    <TH align="left">
+      <input	type="date"  style="width:150px"
+				 value="{{ Rec.HokenStart|date:'Y-m-d' }}" name="HokenStart"/>
+			～
+      <input	type="date" style="width:150px"
+				 value="{{ Rec.HokenEnd|date:'Y-m-d' }}" name="HokenEnd"/><BR>
+			<select name="HokenKaigodo">
+				{% for MstRec in MstKaigodo %} 
+					<option value="{{ MstRec.CD }}"
+						{% if Rec.HokenKaigodo %}{# 指定あり #}
+							{% ifequal Rec.HokenKaigodo MstRec.CD %} selected {% endifequal %}
+						{% else %} {# 未指定 #}
+							{% ifequal MstRec.CD 0  %}{# 0なら選択（ディフォルト） #}
+						    selected
+						  {% endifequal %}
+						{% endif %}
+					>{{ MstRec.Name}}</option>
+				{% endfor %} 
+			</select>
+    </TH>
+  </TR>
+
+  <TR>
+    <TH>総合事業</TH>
+    <TH align="left" colspan="3">
+			該当
+      <input type="radio" name="CheckList" value="True" 
+					{% if Rec.CheckList %}
+						checked
+					{% endif %}
+       >有り
+      <input type="radio" name="CheckList" value="False"
+					{% if Rec.CheckList %}
+					{% else %}
+						checked
+					{% endif %}
+			>無し
+      　　チェックリスト記入日
+      <input type="date"  style="width:200px"
+				value="{{ Rec.CheckDay|date:'Y-m-d' }}" name="CheckDay"/>
+    </TH>
+  </TR>
+  <TR>
+    <TH valign="middle">
+      相談経緯<BR><BR>
+      <input type="text" id="KeiiCtr" disabled="disabled" style="width:40px" >/1000
+      <BR>最大1000バイトです。<BR><BR>
+    </TH>
+    <TD valign="top" colspan="3">
+      <textarea name="Keii" cols=100 rows=8 onkeyup="document.getElementById('KeiiCtr').value=this.value.length*2">{{Rec.Keii|default_if_none:""}}</textarea>
+    </TD>
+  </TR>
+
+  <TR>
+    <TH valign="top">
+      相談内容<BR><BR>
+      <input type="text" id="NaiyoCtr" disabled="disabled"  style="width:40px" >/1000
+      <BR>最大1000バイトです。<BR><BR>
+    </TH>
+    <TD valign="top" colspan="3">
+      <textarea name="Naiyo" cols=100 rows=8 onkeyup="document.getElementById('NaiyoCtr').value=this.value.length*2">{{Rec.Naiyo|default_if_none:""}}</textarea>
+    </TD>
+  </TR>
+
+  <TR>
+    <TH>対応<BR><BR>
+      <input type="text" id="TaiouCtr" disabled="disabled"  style="width:40px" >/1000
+      <BR>最大1000バイトです。<BR><BR>
+		</TH>
+    <TD align="left" colspan="3">
+      <textarea name="Taiou" cols=100 rows=8 onkeyup="document.getElementById('TaiouCtr').value=this.value.length*2">{{Rec.Taiou|default_if_none:""}}</textarea>
+    </TD>
+  </TR>
+
+  <TR>
+    <TH>緊急時連絡先</TH>
+    <TD align="left" colspan="4">
+      名前<input  style="width:200px"
+      	 value="{{ Rec.KinkyuName|default_if_none:"" }}" name="KinkyuName"/><BR>
+      住所　　　<input  style="width:400px"
+      	value="{{ Rec.KinkyuZyusyo|default_if_none:"" }}" name="KinkyuZyusyo"/><BR>
+      電話番号<input style="width:200px"
+      	 value="{{ Rec.KinkyuTel|default_if_none:"" }}" name="KinkyuTel"/><BR>
+    </TD>
+  </TR>
+  <TR>
+    <TH>備考</TH>
+    <TD align="left" colspan="4">
+      <textarea name="Bikou" cols=100 rows=5>{{Rec.Bikou|default_if_none:""}}</textarea>
+    </TD>
+  </TR>
+
+</table>
+{{	LblMsg	}}
+<BR>
+	<input type="submit" value = "基本情報"     name="BtnYasukawa200" class="button"  disabled>
+	<input type="submit" value = "生活情報"     name="BtnYasukawa210" class="button">
+	<input type="submit" value = "病歴"         name="BtnYasukawa220" class="button">
+	<input type="submit" value = "利用サービス" name="BtnYasukawa230" class="button">
+<BR>
+	<input type="submit" value = "終了" name="BtnYasukawa100" class="button"> {# 終了時に保存するから一旦post #}
+<!--
+<input type="submit" value = "終了" name="BtnKettei" class="button"><BR>
+-->
+
+</form>
+
+</body>
+
+</html>

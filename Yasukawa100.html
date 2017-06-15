@@ -1,0 +1,124 @@
+<html>
+<head>
+  <style type="text/css">
+    .text  {font-size:XX-LARGE}
+    .button  {font-size:X-LARGE;WIDTH: 200px; HEIGHT:40px}
+    .button2  {font-size:X-LARGE;WIDTH: 400px; HEIGHT:40px}
+		.scr {
+			overflow-y: scroll;   /* スクロール表示 */ 
+			width: 1120px;
+			height: 600px;
+			border: 1px double #000000; 
+		}
+  </style>
+	<title>Yasukawa100</title>
+</head>
+
+<body>
+	<form name="Main" action="/Yasukawa100/" method="post" style="font-size:X-LARGE">
+	
+<table border="1"  style="font-size:SMALL">
+	<TR style="background-color:LightGray">
+		<TH Width="100px">担当			</TH>
+		<TH Width="150px">氏名			</TH>
+		<TH Width= "30px">性別			</TH>
+		<TH Width="100px">生年月日	</TH>
+		<TH Width= "50px">地域			</TH>
+		<TH Width="100px">住所			</TH>
+		<TH Width="100px">電話番号	</TH>
+		<TH Width="100px">相談日		</TH>
+		<TH Width="50px" >認定			</TH>
+		<TH Width="100px">有効期限	</TH>
+		<TH Width="100px">総合事業	</TH>
+		<TH Width="50px" >削除			</TH>
+	</TR>
+</table>
+<DIV class="scr">
+<table border="1"  style="font-size:SMALL">
+	<TR> <!-- # 枠幅設定用行なので高さは０ -->
+		<TH Height="0" Width="103px" style="border-style:none"></TH>
+		<TH Height="0" Width="150px" style="border-style:none"></TH>
+		<TH Height="0" Width="33px" style="border-style:none"></TH>
+		<TH Height="0" Width="103px" style="border-style:none"></TH>
+		<TH Height="0" Width="53px" style="border-style:none"></TH>
+		<TH Height="0" Width="103px" style="border-style:none"></TH>
+		<TH Height="0" Width="103px" style="border-style:none"></TH>
+		<TH Height="0" Width="103px" style="border-style:none"></TH>
+		<TH Height="0" Width="53px" style="border-style:none"></TH>
+		<TH Height="0" Width="103px" style="border-style:none"></TH>
+		<TH Height="0" Width="103px" style="border-style:none"></TH>
+		<TH Height="0" Width="53px" style="border-style:none"></TH>
+	</TR>
+	{% for Rec in Snap %} 
+		<TR align="center">
+			<TD>{{ Rec.Tanto|default_if_none:"" }}</TD>
+			<TD>
+				<input type="button" style="WIDTH:140px"
+					value="{{ Rec.Name }}" onclick="location.href='/Yasukawa200/?Key={{ Rec.key }}'">
+			</TD>
+			<TD>
+				{% ifequal Rec.Sex 1 %}
+					男
+				{% else %}
+					女
+				{% endifequal %}		
+			</TD>
+			<TD>
+				{{ Rec.Tanzyoubi }}
+			</TD>
+			<TD>
+				{{ Rec.TiikiName|default_if_none:"" }}
+			</TD>
+			<TD align="left">
+				{{ Rec.Zyusyo|safe|default_if_none:"" }}
+			</TD>
+			<TD>
+				{{ Rec.Tel|default_if_none:"" }}
+			</TD>
+			<TD>
+				{{ Rec.Soudanbi|date:'Y/m/d' }}
+			</TD>
+			<TD>
+				{{ Rec.KaigodoName|default_if_none:"" }}
+			</TD>
+			<TD>
+				{{ Rec.HokenStart|date:'Y/m/d' }}～
+				{{ Rec.HokenEnd|date:'Y/m/d' }}<BR>
+				{{ Rec.HokenKaigodoName|default_if_none:"" }}
+			</TD>
+			<TD>
+				{% if Rec.CheckList %}
+					有り
+					<BR>{{ Rec.CheckDay|date:'Y/m/d' }}<BR>
+				{% else %}
+					事業対象者の該当無し
+				{% endif %}		
+			</TD>
+			<TD>
+				<input type="submit" style="WIDTH:48px" Name="BtnDel{{ Rec.key }}"
+				value = "削除">
+			</TD>
+		</TR>
+	{% endfor %}
+
+</table>
+</DIV>
+
+<BR>
+{{  LblMsg }}
+<BR>
+<BR>
+
+	<input type="button" class="button"
+		value="新規登録" onclick="location.href='/Yasukawa200/'">
+　　
+
+	<input type="button" class="button"
+		value="終了" onclick="location.href='/'">
+　　
+
+</form>
+
+</body>
+
+</html>
