@@ -12,7 +12,12 @@ indexes:
 
 - kind: DatByoureki
   properties:
-  - name: KihonKey
+  - name: KanzyaID
+  - name: Hizuke
+
+- kind: DatByoureki
+  properties:
+  - name: KanzyaID
   - name: Hizuke
     direction: desc
 
@@ -20,6 +25,17 @@ indexes:
   properties:
   - name: KihonKey
   - name: Hizuke
+
+- kind: DatByoureki
+  properties:
+  - name: KihonKey
+  - name: Hizuke
+    direction: desc
+
+- kind: DatService
+  properties:
+  - name: KanzyaID
+  - name: CD
 
 - kind: DatService
   properties:

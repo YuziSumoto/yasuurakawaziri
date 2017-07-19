@@ -4,7 +4,7 @@ from google.appengine.ext import db
 import datetime # 日付モジュール
 
 class DatByoureki(db.Model):
-  KihonKey          = db.StringProperty(multiline=False)      # 基本情報キー
+  KanzyaID          = db.IntegerProperty()                    # 利用者番号
   Hizuke            = db.DateTimeProperty(auto_now_add=False) # 年月日
   ByoumeiCD         = db.IntegerProperty()                    # 病名CD
   Byoumei           = db.StringProperty(multiline=False)      # 病名
@@ -13,18 +13,18 @@ class DatByoureki(db.Model):
   Keika             = db.StringProperty(multiline=True)       # 経過
   Naiyo             = db.StringProperty(multiline=True)       # 治療内容・処方
 
-  def GetList(self,KihonKey): # 指定キーのデータ取得
+  def GetList(self,KanzyaID): # 指定利用者番号のデータ取得
 
     Sql =  "SELECT * FROM " + self.__class__.__name__
-    Sql +=  " Where KihonKey = '" + KihonKey + "'"
+    Sql +=  " Where KanzyaID = " + str(KanzyaID)
     Sql += "    Order By Hizuke"
     Query = db.GqlQuery(Sql)
     return Query.fetch(Query.count())
 
-  def GetLast(self,KihonKey): # 指定キーのデータ取得
+  def GetLast(self,KanzyaID): # 指定利用者番号の最終データ取得
 
     Sql =  "SELECT * FROM " + self.__class__.__name__
-    Sql +=  " Where KihonKey = '" + KihonKey + "'"
+    Sql +=  " Where KanzyaID = " + str(KanzyaID)
     Sql += "    Order By Hizuke Desc"
     Query = db.GqlQuery(Sql)
     return Query.fetch(Query.count())

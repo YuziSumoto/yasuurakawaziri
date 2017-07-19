@@ -16,16 +16,16 @@ from MstUser   import *   # 使用者マスタ
 
 class MainHandler(webapp2.RequestHandler):
 
-#  @login_required
+  @login_required
 
   def get(self):
 
     LblMsg = ""
 
-#    user = users.get_current_user() # ログオン確認
-#    if MstUser().ChkUser(user.email()) == False:
-#      self.redirect(users.create_logout_url(self.request.uri))
-#      return
+    user = users.get_current_user() # ログオン確認
+    if MstUser().ChkUser(user.email()) == False:
+      self.redirect(users.create_logout_url(self.request.uri))
+      return
 
 #    if self.request.get('TxtHizuke') == "":
 #      TxtHizuke = datetime.datetime.now().strftime('%Y/%m/%d') # 今日の日付

@@ -32,7 +32,7 @@ class MainHandler(webapp2.RequestHandler):
       'Snap'    : DatKihon().GetAll(),
       'LblMsg' : LblMsg
       }
-    path = os.path.join(os.path.dirname(__file__), 'Yasukawa100.html')
+    path = os.path.join(os.path.dirname(__file__), 'Yasukawa810.html')
     self.response.out.write(template.render(path, template_values))
 
   def post(self):
@@ -53,11 +53,11 @@ class MainHandler(webapp2.RequestHandler):
                       'Snap'    : DatKihon().GetAll(),
                       'LblMsg' : LblMsg
                       }
-    path = os.path.join(os.path.dirname(__file__), 'Yasukawa100.html')
+    path = os.path.join(os.path.dirname(__file__), 'Yasukawa810.html')
     self.response.out.write(template.render(path, template_values))
 
 ####################################################################################################
 
 app = webapp2.WSGIApplication([
-    ('/Yasukawa100/', MainHandler)
+    ('/Yasukawa810/', MainHandler)
 ], debug=True)

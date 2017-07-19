@@ -4,15 +4,15 @@ from google.appengine.ext import db
 import datetime # 日付モジュール
 
 class DatService(db.Model):
-  KihonKey          = db.StringProperty(multiline=False)      # 基本情報キー
+  KanzyaID          = db.IntegerProperty()                    # 利用者番号
   CD                = db.IntegerProperty()                    # サービスCD
   Kubun             = db.IntegerProperty(default=0)           # 公的区分
   Name              = db.StringProperty(multiline=False)      # サービス名
 
-  def GetList(self,KihonKey): # 全データ取得
+  def GetList(self,KanzyaID): # 全データ取得
 
     Sql =  "SELECT * FROM " + self.__class__.__name__
-    Sql += " Where KihonKey = '" + KihonKey + "'"
+    Sql += " Where KanzyaID = " + str(KanzyaID)
     Sql += "    Order By CD"
     Query = db.GqlQuery(Sql)
     Snap  = Query.fetch(Query.count())

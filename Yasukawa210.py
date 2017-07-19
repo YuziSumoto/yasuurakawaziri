@@ -20,27 +20,27 @@ from DatSeikatu     import *   # 生活データ
 
 class MainHandler(webapp2.RequestHandler):
 
-#  @login_required
+  @login_required
 #-------------------------------------------------------------
 # 初期表示
 #-------------------------------------------------------------
   def get(self):
 
-#    user = users.get_current_user() # ログオン確認
-#    if MstUser().ChkUser(user.email()) == False:
-#      self.redirect(users.create_logout_url(self.request.uri))
-#      return
+    user = users.get_current_user() # ログオン確認
+    if MstUser().ChkUser(user.email()) == False:
+      self.redirect(users.create_logout_url(self.request.uri))
+      return
 
-    cookieStr = 'Key=' + self.request.get('Key') + ';'     # Cookie保存
+    cookieStr = 'KanzyaID=' + self.request.get('KanzyaID') + ';'     # Cookie保存
     self.response.headers.add_header('Set-Cookie', cookieStr.encode('shift-jis'))
 
-    Kihon = DatKihon().GetRec(self.request.get('Key'))
+    Kihon = DatKihon().GetRec(self.request.get('KanzyaID'))
 
     LblMsg = ""
 
     template_values = {
       'Kihon'          : Kihon,
-      'Seikatu'        : DatSeikatu().GetRec(self.request.get('Key')),
+      'Seikatu'        : DatSeikatu().GetRec(self.request.get('KanzyaID')),
       'MstZiritudoS'   : MstZiritudoS().GetAll(),
       'MstZiritudoN'   : MstZiritudoN().GetAll(),
       'LblMsg'         : LblMsg
@@ -52,28 +52,28 @@ class MainHandler(webapp2.RequestHandler):
 #-------------------------------------------------------------
   def post(self):
 
-#    user = users.get_current_user() # ログオン確認
-#    if MstUser().ChkUser(user.email()) == False:
-#      self.redirect(users.create_logout_url(self.request.uri))
-#      return
+    user = users.get_current_user() # ログオン確認
+    if MstUser().ChkUser(user.email()) == False:
+      self.redirect(users.create_logout_url(self.request.uri))
+      return
 
     Rec = {} # 画面受け渡し用領域
     LblMsg = ""
 
     LblMsg = ""
 
-    Key = self.request.cookies.get('Key', '') # CooKie取得
+    KanzyaID = self.request.cookies.get('KanzyaID', '') # CooKie取得
 
     for param in self.request.arguments():
       if "BtnYasukawa" in param:
         self.DBSet()
-        self.redirect("/" + param.replace("Btn","") + "/?Key=" + Key) #
+        self.redirect("/" + param.replace("Btn","") + "/?KanzyaID=" + KanzyaID) #
 
-    Kihon = DatKihon().GetRec(Key)
+    Kihon = DatKihon().GetRec(KanzyaID)
 
     template_values = {
       'Kihon'     : Kihon,
-      'Seikatu'   : DatSeikatu().GetRec(Key),
+      'Seikatu'   : DatSeikatu().GetRec(KanzyaID),
       'MstZiritudoS'   : MstZiritudoS().GetAll(),
       'MstZiritudoN'   : MstZiritudoN().GetAll(),
       'LblMsg'    : LblMsg
@@ -121,13 +121,13 @@ class MainHandler(webapp2.RequestHandler):
 #------------------------------------------------------------------------------
   def DBSet(self):  # データ保存
 
-    Key =  self.request.cookies.get('Key', '') # Cookieより
-    if Key == "":
+    KanzyaID =  self.request.cookies.get('KanzyaID', '') # Cookieより
+    if KanzyaID == "":
       Rec = DatSeikatu() # 新規レコード
     else:
-      Rec = DatSeikatu().GetRec(Key) # 更新
+      Rec = DatSeikatu().GetRec(KanzyaID) # 更新
 
-    Rec.KihonKey = Key
+    Rec.KanzyaID = int(KanzyaID)
     
     Dic = Rec.properties()
     DicKeys = Dic.keys()

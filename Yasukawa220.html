@@ -56,7 +56,7 @@
 			<TD>
 				<input type="button" style="WIDTH:97px"
 					value="{{ Rec.Hizuke|date:'Y/m/d' }}"
-					 onclick="location.href='/Yasukawa225/?KihonKey={{ Kihon.key }}&Key={{ Rec.key }}'">
+					 onclick="location.href='/Yasukawa225/?KanzyaID={{ Kihon.KanzyaID }}&Key={{ Rec.key }}'">
 			</TD>
 			<TD align="left">
 				{{ Rec.Byoumei|default_if_none:"" }}
@@ -79,7 +79,7 @@
 	<TR align="center">
 		<TD colspan="6">
 			<input type="button"  style="WIDTH:850px;color:blue;font-size:LARGE;"
-			value="新規登録" onclick="location.href='/Yasukawa225/?KihonKey={{Kihon.key}}'">
+			value="新規登録" onclick="location.href='/Yasukawa225/?KanzyaID={{Kihon.KanzyaID}}'">
 		</TD>
 	</TR>
 	</table>
@@ -89,15 +89,15 @@
 <BR>
 
 	<input type="button" class="button"
-		value="基本情報" onclick="location.href='/Yasukawa200/?Key={{Kihon.key}}'">
+		value="基本情報" onclick="location.href='/Yasukawa200/?KanzyaID={{Kihon.KanzyaID}}'">
 	<input type="button" class="button"
-		value="生活情報" onclick="location.href='/Yasukawa210/?Key={{Kihon.key}}'">
+		value="生活情報" onclick="location.href='/Yasukawa210/?KanzyaID={{Kihon.KanzyaID}}'">
 <!--
 	<input type="button" class="button" disabled
 		value="病歴" onclick="location.href='/Yasukawa220/'">
 -->
 	<input type="button" class="button"
-		value="利用サービス" onclick="location.href='/Yasukawa230/?Key={{Kihon.key}}'">
+		value="利用サービス" onclick="location.href='/Yasukawa230/?KanzyaID={{Kihon.KanzyaID}}'">
 　
 	<input type="button" class="button"
 		value="終了" onclick="location.href='/Yasukawa100/'">

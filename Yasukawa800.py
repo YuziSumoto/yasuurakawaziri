@@ -37,7 +37,6 @@ class MainHandler(webapp2.RequestHandler):
 #      self.redirect(users.create_logout_url(self.request.uri))
 #      return
 
-
     WorkBook =  self.ExcelSet()
 
     self.response.headers['Content-Type'] = 'application/ms-excel'
@@ -73,7 +72,7 @@ class MainHandler(webapp2.RequestHandler):
       WorkSheet.write(Row,5,RecKihon.Soudanbi,Style)
       for Col in range(6,30):
         WorkSheet.write(Row,Col," ",Style)
-      Row = self.SetByoureki(WorkSheet,str(RecKihon.key()),Row,Style)
+      Row = self.SetByoureki(WorkSheet,RecKihon.KanzyaID,Row,Style)
       
       Row += 1
 
@@ -128,10 +127,10 @@ class MainHandler(webapp2.RequestHandler):
 
     return
 
-  def SetByoureki(self,WorkSheet,KihonKey,Row,Style):  # 病歴セット
+  def SetByoureki(self,WorkSheet,KanzyaID,Row,Style):  # 病歴セット
 
     OutStr = ""
-    for RecByoureki in DatByoureki().GetLast(KihonKey):
+    for RecByoureki in DatByoureki().GetLast(KanzyaID):
       if RecByoureki.ByoumeiCD == 0:
         WorkSheet.write(Row,30,RecByoureki.Byoumei,Style)
       else:

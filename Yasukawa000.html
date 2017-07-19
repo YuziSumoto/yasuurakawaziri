@@ -2,7 +2,7 @@
 <head>
   <style type="text/css">
     .text  {font-size:XX-LARGE}
-    .button  {font-size:X-LARGE;WIDTH: 200px; HEIGHT:40px}
+    .button  {font-size:X-LARGE;WIDTH: 300px; HEIGHT:40px}
   </style>
 
 	<!-- カレンダー表示用 ↓-->
@@ -39,6 +39,10 @@
 		onclick="window.open('/Yasukawa800/{{ PrintParam }}');setTimeout('document.Main.submit()', 1000);">
 <BR>
 <BR>
+	<input type="button" class="button"
+		value="フェイスシート出力" onclick="location.href='/Yasukawa810/'">
+<BR>
+<BR>
 	<input type="button" value = "マスタメンテ" class="button"
 		value="マスタメンテ" onclick="location.href='/Yasukawa900/'">
 
@@ -53,8 +57,8 @@
 <label style="font-size:LARGE;COLOR: red">{{ LblMsg }}</label><BR>
 
 <BR>
-	<input type="button" class="button"
-		value="終了" onclick="location.href='/'">
+<input type="submit" value = "終了" name="BtnLogout" class="button"><BR>
+
 <!--
 <input type="submit" value = "終了" name="BtnLogout" class="button"><BR>
 -->

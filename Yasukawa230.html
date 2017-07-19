@@ -67,7 +67,7 @@
 			</TD>
 			<TD>
 				<input type="button" style="WIDTH:200px"
-					value="{{ Rec.Name }}" onclick="location.href='/Yasukawa235/?KihonKey={{Kihon.key}}&Key={{ Rec.key }}'">
+					value="{{ Rec.Name }}" onclick="location.href='/Yasukawa235/?KanzyaID={{Kihon.KanzyaID}}&Key={{ Rec.key }}'">
 			</TD>
 			<TD>
 				<input type="submit" style="WIDTH:47px;color:red;" Name="BtnDel{{ Rec.key }}"
@@ -78,7 +78,7 @@
 	<TR>
 		<TH colspan="3">
 			<input type="button" style="WIDTH:350px;font-size:LARGE;color:blue;"
-				value="新規登録" onclick="location.href='/Yasukawa235/?KihonKey={{Kihon.key}}'">
+				value="新規登録" onclick="location.href='/Yasukawa235/?KanzyaID={{Kihon.KanzyaID}}'">
 		</TH>
 	</TR>
 
@@ -89,11 +89,11 @@
 <BR>
 
 	<input type="button" class="button"
-		value="基本情報" onclick="location.href='/Yasukawa200/?Key={{Kihon.key}}'">
+		value="基本情報" onclick="location.href='/Yasukawa200/?KanzyaID={{Kihon.KanzyaID}}'">
 	<input type="button" class="button"
-		value="生活情報" onclick="location.href='/Yasukawa210/?Key={{Kihon.key}}'">
+		value="生活情報" onclick="location.href='/Yasukawa210/?KanzyaID={{Kihon.KanzyaID}}'">
 	<input type="button" class="button"
-		value="病歴"     onclick="location.href='/Yasukawa220/?Key={{Kihon.key}}'">
+		value="病歴"     onclick="location.href='/Yasukawa220/?KanzyaID={{Kihon.KanzyaID}}'">
 <!--
 	<input type="button" class="button" disabled
 		value="利用サービス" onclick="location.href='/Yasukawa230/'">

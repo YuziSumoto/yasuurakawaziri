@@ -19,25 +19,25 @@ from MstByoumei   import *   # 病名マスタ
 
 class MainHandler(webapp2.RequestHandler):
 
-#  @login_required
+  @login_required
 
   def get(self):
 
-#    user = users.get_current_user() # ログオン確認
-#    if MstUser().ChkUser(user.email()) == False:
-#      self.redirect(users.create_logout_url(self.request.uri))
-#      return
+    user = users.get_current_user() # ログオン確認
+    if MstUser().ChkUser(user.email()) == False:
+      self.redirect(users.create_logout_url(self.request.uri))
+      return
 
-    if self.request.get('Key') != "":
-      KihonKey = self.request.get('Key')
-      cookieStr = 'Key=' + KihonKey + ';'     # Cookie保存
+    if self.request.get('KanzyaID') != "":
+      KanzyaID = self.request.get('KanzyaID')
+      cookieStr = 'KanzyaID=' + KanzyaID + ';'     # Cookie保存
       self.response.headers.add_header('Set-Cookie', cookieStr.encode('shift-jis'))
     else:
-     KihonKey = self.request.cookies.get('Key', '')
+      KanzyaID = self.request.cookies.get('KanzyaID', '')
 
     LblMsg = ""
 
-    Snap = DatByoureki().GetList(KihonKey)
+    Snap = DatByoureki().GetList(KanzyaID)
     for Rec in Snap:
       if Rec.Byoumei =="":
         Rec.Byoumei = MstByoumei().GetRec(Rec.ByoumeiCD).Name
@@ -46,7 +46,7 @@ class MainHandler(webapp2.RequestHandler):
       Rec.Naiyo = Rec.Naiyo.replace("\n","<BR>")
 
     template_values = {
-                       'Kihon'    : DatKihon().GetRec(KihonKey),
+                       'Kihon'    : DatKihon().GetRec(KanzyaID),
                        'Snap'     : Snap
                       ,'LblMsg'   : LblMsg
                       }
@@ -57,14 +57,14 @@ class MainHandler(webapp2.RequestHandler):
 
     LblMsg = " "
 
-    KihonKey = self.request.cookies.get('Key', '') # CooKie取得
+    KanzyaID = self.request.cookies.get('KanzyaID', '') # CooKie取得
 
     for param in self.request.arguments(): 
       if "BtnDel" in param:  # 削除ボタン？
         DatByoureki().DelRec(param.replace("BtnDel",""))
         LblMsg = "削除しました"
 
-    Snap = DatByoureki().GetList(KihonKey)
+    Snap = DatByoureki().GetList(KanzyaID)
     for Rec in Snap:
       if Rec.Byoumei =="":
         Rec.Byoumei = MstByoumei().GetRec(Rec.ByoumeiCD).Name
@@ -73,7 +73,7 @@ class MainHandler(webapp2.RequestHandler):
       Rec.Naiyo = Rec.Naiyo.replace("\n","<BR>")
 
     template_values = {
-                       'Kihon'    : DatKihon().GetRec(KihonKey),
+                       'Kihon'    : DatKihon().GetRec(KanzyaID),
                        'Snap'     : Snap
                       ,'LblMsg'   : LblMsg
                       }

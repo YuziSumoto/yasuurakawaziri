@@ -1,19 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 import webapp2
-
 import os
 from google.appengine.ext.webapp import template
-
 from google.appengine.ext.webapp.util import login_required
 from google.appengine.api import users
+from MstUser   import *   # 使用者マスタ
 
-import common
-
-import datetime # 日付モジュール
-
-from MstUser     import *   # 使用者マスタ
-from DatKihon    import *   # 利用者基本データ
+from MstKeitai import *  # 相談形態マスタ
+import datetime
 
 class MainHandler(webapp2.RequestHandler):
 
@@ -29,10 +24,10 @@ class MainHandler(webapp2.RequestHandler):
     LblMsg = ""
 
     template_values = {
-      'Snap'    : DatKihon().GetAll(),
-      'LblMsg' : LblMsg
-      }
-    path = os.path.join(os.path.dirname(__file__), 'Yasukawa100.html')
+                       'Snap'  :MstKeitai().GetAll()
+                      ,'LblMsg':LblMsg
+                      }
+    path = os.path.join(os.path.dirname(__file__), 'Yasukawa970.html')
     self.response.out.write(template.render(path, template_values))
 
   def post(self):
@@ -46,18 +41,16 @@ class MainHandler(webapp2.RequestHandler):
 
     for param in self.request.arguments():
       if "BtnDel" in param:
-        DatKihon().DelRec(param.replace("BtnDel",""))
+        MstKeitai().DelRec(param.replace("BtnDel",""))
         LblMsg = u"削除しました"
 
     template_values = {
-                      'Snap'    : DatKihon().GetAll(),
-                      'LblMsg' : LblMsg
+                       'Snap'  :MstKeitai().GetAll()
+                      ,'LblMsg':LblMsg
                       }
-    path = os.path.join(os.path.dirname(__file__), 'Yasukawa100.html')
+    path = os.path.join(os.path.dirname(__file__), 'Yasukawa970.html')
     self.response.out.write(template.render(path, template_values))
 
-####################################################################################################
-
 app = webapp2.WSGIApplication([
-    ('/Yasukawa100/', MainHandler)
+    ('/Yasukawa970/', MainHandler)
 ], debug=True)

@@ -23,11 +23,10 @@
 </head>
 
 <body>
-	<form name="Main" action="/Yasukawa100/" method="post" style="font-size:X-LARGE">
+	<form name="Main" action="/Yasukawa810/" method="post" style="font-size:X-LARGE">
 <table border="1">
 	<TR>
-		<TH Width= "50px">No			</TH>
-		<TH Width=" 50px">担当			</TH>
+		<TH Width="100px">担当			</TH>
 		<TH Width="150px">氏名			</TH>
 		<TH Width= "30px">性別			</TH>
 		<TH Width="100px">生年月日	</TH>
@@ -38,14 +37,13 @@
 		<TH Width="50px" >認定			</TH>
 		<TH Width="100px">有効期限	</TH>
 		<TH Width="100px">総合事業	</TH>
-		<TH Width="50px" >削除			</TH>
+		<TH Width="50px" >印刷			</TH>
 	</TR>
 </table>
 <DIV class="scr">
 <table border="1">
 	<TR> <!-- # 枠幅設定用行なので高さは０ -->
-		<TH Height="0" Width="50px" style="border-style:none"></TH>
-		<TH Height="0" Width="50px" style="border-style:none"></TH>
+		<TH Height="0" Width="100px" style="border-style:none"></TH>
 		<TH Height="0" Width="150px" style="border-style:none"></TH>
 		<TH Height="0" Width="30px" style="border-style:none"></TH>
 		<TH Height="0" Width="100px" style="border-style:none"></TH>
@@ -60,11 +58,9 @@
 	</TR>
 	{% for Rec in Snap %} 
 		<TR align="center">
-			<TD>{{ Rec.KanzyaID|default_if_none:"" }}</TD>
 			<TD>{{ Rec.Tanto|default_if_none:"" }}</TD>
 			<TD>
-				<input type="button" style="WIDTH:140px"
-					value="{{ Rec.Name }}" onclick="location.href='/Yasukawa200/?KanzyaID={{ Rec.KanzyaID }}'">
+					{{ Rec.Name }}
 			</TD>
 			<TD>
 				{% ifequal Rec.Sex 1 %}
@@ -105,8 +101,8 @@
 				{% endif %}		
 			</TD>
 			<TD>
-				<input type="submit" style="WIDTH:48px" Name="BtnDel{{ Rec.KanzyaID }}"
-				value = "削除">
+				<input type="button" value = "印刷" style="WIDTH:48px"
+						onclick="window.open('/Yasukawa815/?KanzyaID={{ Rec.KanzyaID }}');setTimeout('document.Main.submit()', 1000);">
 			</TD>
 		</TR>
 	{% endfor %}
@@ -120,12 +116,7 @@
 <BR>
 
 	<input type="button" class="button"
-		value="新規登録" onclick="location.href='/Yasukawa200/'">
-　　
-
-	<input type="button" class="button"
 		value="終了" onclick="location.href='/'">
-　　
 
 </form>
 

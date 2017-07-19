@@ -36,6 +36,9 @@ class MstKaigodo(db.Model):
 
   def GetName(self,CD): # CDキーのデータ取得
 
+    if CD is None:
+      return ""
+    
     Sql =  "SELECT * FROM " + self.__class__.__name__
     Sql +=  " Where CD = " + str(CD) 
     Query = db.GqlQuery(Sql)

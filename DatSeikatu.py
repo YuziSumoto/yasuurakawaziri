@@ -7,7 +7,7 @@ from MstKaigodo  import *   # 介護度マスタ
 from MstTiiki    import *   # 使用者マスタ
 
 class DatSeikatu(db.Model):
-  KihonKey          = db.StringProperty(multiline=False)      # 基本情報キー
+  KanzyaID          = db.IntegerProperty()                    # 利用者番号
   ZiritudoS         = db.IntegerProperty()                    # 障害自立度
   ZiritudoN         = db.IntegerProperty()                    # 認知症自立度
   Kazoku            = db.StringProperty(multiline=True)      # 家族関係
@@ -28,12 +28,15 @@ class DatSeikatu(db.Model):
 #  RenrakuR          = db.StringProperty(multiline=False)      # 連絡先連絡先
   Syumi             = db.StringProperty(multiline=True)       # 趣味
   Yuzin             = db.StringProperty(multiline=True)       # 友人
-  Seikatu           = db.StringProperty(multiline=True)       # 生活
+  Seikatu           = db.StringProperty(multiline=True)       # 生活状況
+  SeikatuReki       = db.StringProperty(multiline=True)       # 生活歴
+  Zyutaku           = db.StringProperty(multiline=False)      # 住宅環境
+  Kaisyu            = db.StringProperty(multiline=False)      # 住宅改修の有無
 
-  def GetRec(self,Key): # 指定キーのデータ取得
+  def GetRec(self,KanzyaID): # 指定キーのデータ取得
 
     Sql =  "SELECT * FROM " + self.__class__.__name__
-    Sql +=  " Where KihonKey = '" + Key + "'"
+    Sql +=  " Where KanzyaID = " + str(KanzyaID)
     Snap = db.GqlQuery(Sql)
     if Snap.count() == 0:
       Rec = DatSeikatu()
@@ -45,7 +48,7 @@ class DatSeikatu(db.Model):
   def DelRec(self,Key): # 指定キーのデータ削除
 
     Sql =  "SELECT * FROM " + self.__class__.__name__
-    Sql +=  " Where KihonKey = '" + Key + "'"
+    Sql +=  " Where KanzyaID = " + str(KanzyaID)
     Snap = db.GqlQuery(Sql)
     for Rec in Snap:
        Rec.delete()

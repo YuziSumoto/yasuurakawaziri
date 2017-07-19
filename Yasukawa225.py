@@ -19,20 +19,20 @@ from DatKihon    import *   # 患者基本データ
 
 class MainHandler(webapp2.RequestHandler):
 
-#  @login_required
+  @login_required
 #-------------------------------------------------------------
 # 初期表示
 #-------------------------------------------------------------
   def get(self):
 
-#    user = users.get_current_user() # ログオン確認
-#    if MstUser().ChkUser(user.email()) == False:
-#      self.redirect(users.create_logout_url(self.request.uri))
-#      return
+    user = users.get_current_user() # ログオン確認
+    if MstUser().ChkUser(user.email()) == False:
+      self.redirect(users.create_logout_url(self.request.uri))
+      return
 
-    if self.request.get('KihonKey')  != "":
-      KihonKey = self.request.get('KihonKey')   # 基本情報キー
-      cookieStr = 'KihonKey=' + KihonKey + ';'     # Cookie保存
+    if self.request.get('KanzyaID')  != "":
+      KanzyaID = self.request.get('KanzyaID')   # 利用者番号
+      cookieStr = 'KanzyaID=' + KanzyaID + ';'     # Cookie保存
       self.response.headers.add_header('Set-Cookie', cookieStr.encode('shift-jis'))
 
     if self.request.get('Key') == "": # パラメタ無し？
@@ -46,7 +46,7 @@ class MainHandler(webapp2.RequestHandler):
     LblMsg = "内容を指定し、決定を押してください。"
 
     template_values = {
-      'Kihon'      : DatKihon().GetRec(KihonKey),
+      'Kihon'      : DatKihon().GetRec(KanzyaID),
       'Rec'        : DatByoureki().GetRec(Key),
       'MstByoumei' : MstByoumei().GetAll(),
       'LblMsg'     : LblMsg
@@ -58,20 +58,20 @@ class MainHandler(webapp2.RequestHandler):
 #-------------------------------------------------------------
   def post(self):
 
-#    user = users.get_current_user() # ログオン確認
-#    if MstUser().ChkUser(user.email()) == False:
-#      self.redirect(users.create_logout_url(self.request.uri))
-#      return
+    user = users.get_current_user() # ログオン確認
+    if MstUser().ChkUser(user.email()) == False:
+      self.redirect(users.create_logout_url(self.request.uri))
+      return
 
     LblMsg = ""
 
     Key = self.request.cookies.get('Key', '') # CooKie取得
-    KihonKey = self.request.cookies.get('KihonKey', '') # CooKie取得
+    KanzyaID = self.request.cookies.get('KanzyaID', '') # CooKie取得
 
     ErrFlg,LblMsg = self.ChkInput() # 入力チェック
     if ErrFlg == False: # エラー無し
       self.DBSet()
-      self.redirect("/Yasukawa220/?KihonKey=" + KihonKey) # 一覧に戻る
+      self.redirect("/Yasukawa220/?KanzyaID=" + KanzyaID) # 一覧に戻る
       return
 
     Rec = {}
@@ -84,7 +84,7 @@ class MainHandler(webapp2.RequestHandler):
         Rec["Hizuke"] = datetime.datetime.strptime(Rec["Hizuke"], '%Y/%m/%d')
     
     template_values = {
-      'Kihon'      : DatKihon().GetRec(KihonKey),
+      'Kihon'      : DatKihon().GetRec(KanzyaID),
       'Rec'        : Rec,
       'MstByoumei' : MstByoumei().GetAll(),
       'LblMsg'     : LblMsg
@@ -110,7 +110,7 @@ class MainHandler(webapp2.RequestHandler):
   def DBSet(self):  # データ保存
 
     Key = self.request.cookies.get('Key', '') # CooKie取得
-    KihonKey = self.request.cookies.get('KihonKey', '') # CooKie取得
+    KanzyaID = self.request.cookies.get('KanzyaID', '') # CooKie取得
 
     if Key == "":
       Rec = DatByoureki() # 新規レコード
@@ -140,7 +140,7 @@ class MainHandler(webapp2.RequestHandler):
       else:
         setattr(Rec,ParaName,self.request.get(ParaName))
 
-    Rec.KihonKey = KihonKey
+    Rec.KanzyaID = int(KanzyaID)
     key = Rec.put()
     
     return

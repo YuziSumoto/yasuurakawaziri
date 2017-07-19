@@ -46,6 +46,12 @@ handlers:
 # EXCEL出力画面
 - url: /Yasukawa800/.*
   script: Yasukawa800.app
+# フェイスシート患者選択
+- url: /Yasukawa810/.*
+  script: Yasukawa810.app
+# フェイスシート印刷
+- url: /Yasukawa815/.*
+  script: Yasukawa815.app
 
 # マスタメンテメニュー
 - url: /Yasukawa900/.*
@@ -86,6 +92,16 @@ handlers:
 # サービスマスタメンテ
 - url: /Yasukawa965/.*
   script: Yasukawa965.app
+# 形態マスタ一覧
+- url: /Yasukawa970/.*
+  script: Yasukawa970.app
+# 形態マスタマスタメンテ
+- url: /Yasukawa975/.*
+  script: Yasukawa975.app
+
+# ＣＳＶ取り込み
+- url: /Yasukawa990/.*
+  script: Yasukawa990.app
 
 # 初画面(日付指定画面)
 - url: .*

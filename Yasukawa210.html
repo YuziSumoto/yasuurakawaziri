@@ -94,6 +94,16 @@
 				value="{{ Seikatu.Nanbyo|default_if_none:"" }}" name="Nanbyo"/>
     </TH>
   </TR>
+  <TR style="background-color:lightgray">
+    <TH>住宅環境</TH>
+    <TH align="left">
+			<input  style="width:200px" 
+				value="{{ Seikatu.Zyutaku|default_if_none:"" }}" name="Zyutaku"/>
+			　改修
+			<input  style="width:200px" 
+				value="{{ Seikatu.Kaisyu|default_if_none:"" }}" name="Kaisyu"/>
+    </TH>
+  </TR>
 
   <TR style="background-color:lightgray">
     <TH>家族関係の状況
@@ -183,6 +193,17 @@
   <TR>
     <TH valign="top" style="background-color:lightgray">
       生活歴<BR><BR>
+      <input type="text" id="SeikatuRekiCtr" disabled="disabled"  style="width:40px" >/1000
+      <BR>最大1000バイトです。<BR><BR>
+    </TH>
+    <TD valign="top" colspan="4">
+      <textarea name="SeikatuReki" cols=100 rows=8 onkeyup="document.getElementById('SeikatuRekiCtr').value=this.value.length*2"
+      >{{Seikatu.SeikatuReki|default_if_none:""}}</textarea>
+    </TD>
+  </TR>
+  <TR>
+    <TH valign="top" style="background-color:lightgray">
+      一日の生活・すごし方<BR><BR>
       <input type="text" id="SeikatuCtr" disabled="disabled"  style="width:40px" >/1000
       <BR>最大1000バイトです。<BR><BR>
     </TH>
@@ -197,13 +218,11 @@
 <BR>
 	<input type="submit"
 		value = "基本情報" name="BtnYasukawa200" class="button">
-	<input type="submit" disabled
-		value = "生活情報" name="BtnYasukawa210" class="button">
 	<input type="submit"
 		value = "病歴" name="BtnYasukawa220" class="button">
 	<input type="submit"
 		value = "利用サービス" name="BtnYasukawa230" class="button">
-　
+　　
 	<input type="submit" value = "終了" name="BtnYasukawa100" class="button"> {# 終了時に保存するから一旦post #}
 <!--
 <input type="submit" value = "終了" name="BtnKettei" class="button"><BR>

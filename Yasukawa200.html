@@ -27,8 +27,15 @@
 
 <body>
 	<form name="Main" action="/Yasukawa200/" method="post" style="font-size:X-LARGE">
-
 <table border="1" style="background-color:lightgray">
+  <TR>
+    <TH style="width:80px">
+      利用者番号
+    </TH>
+    <TH align="left" colspan="3">
+      <input type="number" value="{{ Rec.KanzyaID|default_if_none:"" }}" name="KanzyaID" style="width:200px"/>
+    </TH>
+  </TR>
 
   <TR>
     <TH style="width:80px" rowspan="2">
@@ -90,7 +97,21 @@
   <TR>
     <TH>相談日</TH>
     <TH align="left">
-      <input type="date" value="{{ Rec.Soudanbi|date:'Y-m-d' }}" name="Soudanbi" style="width:200px"/>
+      <input type="date" value="{{ Rec.Soudanbi|date:'Y-m-d' }}" name="Soudanbi" style="width:200px"/><BR>
+			<select name="Keitai">
+				{% for MstRec in MstKeitai %} 
+					<option value="{{ MstRec.CD }}"
+						{% if Rec.Keitai %}{# 指定あり #}
+							{% ifequal Rec.Keitai MstRec.CD %} selected {% endifequal %}
+						{% else %} {# 未指定 #}
+							{% ifequal MstRec.CD 0  %}{# 0なら選択（ディフォルト） #}
+						    selected
+						  {% endifequal %}
+						{% endif %}
+					>{{ MstRec.Name}}</option>
+				{% endfor %} 
+			</select>
+      対応<input value="{{ Rec.Kaisu|default_if_none:"" }}" name="Kaisu" style="width:200px"/>
     </TH>
     <TH>担当</TH>
     <TH align="left">
@@ -158,6 +179,13 @@
     </TH>
   </TR>
   <TR>
+    <TH>本人の状況</TH>
+    <TH align="left" colspan="3">
+      状況<input value="{{ Rec.Zyokyo|default_if_none:"" }}" name="Zyokyo" style="width:100px"/>
+      施設<input value="{{ Rec.Sisetu|default_if_none:"" }}" name="Sisetu" style="width:200px"/>
+    </TH>
+  </TR>
+  <TR>
     <TH valign="middle">
       相談経緯<BR><BR>
       <input type="text" id="KeiiCtr" disabled="disabled" style="width:40px" >/1000
@@ -190,14 +218,52 @@
   </TR>
 
   <TR>
-    <TH>緊急時連絡先</TH>
+    <TH rowspan="4">緊急時連絡先</TH>
     <TD align="left" colspan="4">
       名前<input  style="width:200px"
-      	 value="{{ Rec.KinkyuName|default_if_none:"" }}" name="KinkyuName"/><BR>
+      	 value="{{ Rec.KinkyuName1|default_if_none:"" }}" name="KinkyuName1"/>
+      続柄<input style="width:200px"
+      	 value="{{ Rec.KinkyuZokugara1|default_if_none:"" }}" name="KinkyuZokugara1"/><BR>
       住所　　　<input  style="width:400px"
-      	value="{{ Rec.KinkyuZyusyo|default_if_none:"" }}" name="KinkyuZyusyo"/><BR>
+      	value="{{ Rec.KinkyuZyusyo1|default_if_none:"" }}" name="KinkyuZyusyo1"/><BR>
       電話番号<input style="width:200px"
-      	 value="{{ Rec.KinkyuTel|default_if_none:"" }}" name="KinkyuTel"/><BR>
+      	 value="{{ Rec.KinkyuTel1|default_if_none:"" }}" name="KinkyuTel1"/><BR>
+    </TD>
+  </TR>
+  <TR>
+    <TD align="left" colspan="4">
+      名前<input  style="width:200px"
+      	 value="{{ Rec.KinkyuName2|default_if_none:"" }}" name="KinkyuName2"/>
+      続柄<input style="width:200px"
+      	 value="{{ Rec.KinkyuZokugara2|default_if_none:"" }}" name="KinkyuZokugara2"/><BR>
+      住所　　　<input  style="width:400px"
+      	value="{{ Rec.KinkyuZyusyo2|default_if_none:"" }}" name="KinkyuZyusyo2"/><BR>
+      電話番号<input style="width:200px"
+      	 value="{{ Rec.KinkyuTel2|default_if_none:"" }}" name="KinkyuTel2"/><BR>
+    </TD>
+  </TR>
+  <TR>
+    <TD align="left" colspan="4">
+      名前<input  style="width:200px"
+      	 value="{{ Rec.KinkyuName3|default_if_none:"" }}" name="KinkyuName3"/>
+      続柄<input style="width:200px"
+      	 value="{{ Rec.KinkyuZokugara3|default_if_none:"" }}" name="KinkyuZokugara3"/><BR>
+      住所　　　<input  style="width:400px"
+      	value="{{ Rec.KinkyuZyusyo3|default_if_none:"" }}" name="KinkyuZyusyo3"/><BR>
+      電話番号<input style="width:200px"
+      	 value="{{ Rec.KinkyuTel3|default_if_none:"" }}" name="KinkyuTel3"/><BR>
+    </TD>
+  </TR>
+  <TR>
+    <TD align="left" colspan="4">
+      名前<input  style="width:200px"
+      	 value="{{ Rec.KinkyuName4|default_if_none:"" }}" name="KinkyuName4"/>
+      続柄<input style="width:200px"
+      	 value="{{ Rec.KinkyuZokugara4|default_if_none:"" }}" name="KinkyuZokugara4"/><BR>
+      住所　　　<input  style="width:400px"
+      	value="{{ Rec.KinkyuZyusyo4|default_if_none:"" }}" name="KinkyuZyusyo4"/><BR>
+      電話番号<input style="width:200px"
+      	 value="{{ Rec.KinkyuTel4|default_if_none:"" }}" name="KinkyuTel4"/><BR>
     </TD>
   </TR>
   <TR>
@@ -210,11 +276,10 @@
 </table>
 {{	LblMsg	}}
 <BR>
-	<input type="submit" value = "基本情報"     name="BtnYasukawa200" class="button"  disabled>
 	<input type="submit" value = "生活情報"     name="BtnYasukawa210" class="button">
 	<input type="submit" value = "病歴"         name="BtnYasukawa220" class="button">
 	<input type="submit" value = "利用サービス" name="BtnYasukawa230" class="button">
-<BR>
+　　
 	<input type="submit" value = "終了" name="BtnYasukawa100" class="button"> {# 終了時に保存するから一旦post #}
 <!--
 <input type="submit" value = "終了" name="BtnKettei" class="button"><BR>

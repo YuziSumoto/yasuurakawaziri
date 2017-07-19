@@ -6,14 +6,18 @@ class MstUser(db.Model):
 
   def ChkUser(self,Name):
 
+#    MstUser(Name="dummy").put() # 初期設定用
 
-    Sql  =   "SELECT * FROM MstUser"
-    Sql  +=  " Where Name = '" + Name + "'"
-    Query = db.GqlQuery(Sql)
-    if Query.count() == 0:
-      RetFlg = False
-    else:
+    if Name.find("@kangosien.com") > 0: # ドメインユーザなら無条件ＯＫ
       RetFlg = True
+    else: # ドメイン以外はユーザチェック
+      Sql  =   "SELECT * FROM MstUser"
+      Sql  +=  " Where Name = '" + Name + "'"
+      Query = db.GqlQuery(Sql)
+      if Query.count() == 0:
+        RetFlg = False
+      else:
+        RetFlg = True
 
     return RetFlg
 
