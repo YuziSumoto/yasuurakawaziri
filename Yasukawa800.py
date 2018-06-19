@@ -61,16 +61,8 @@ class MainHandler(webapp2.RequestHandler):
     Row = 3
 
     for RecKihon in SnapKihon:
-      WorkSheet.write(Row,0,RecKihon.Tanto,Style)
-      WorkSheet.write(Row,1,RecKihon.Kana + "\n" + RecKihon.Name,Style)
-      if RecKihon.Sex == 1:
-        WorkSheet.write(Row,2,u"男",Style)
-      else:
-        WorkSheet.write(Row,2,u"女",Style)
-      WorkSheet.write(Row,3,RecKihon.Zyusyo.replace("<BR>","\n"),Style)
-      WorkSheet.write(Row,4,RecKihon.Tel,Style)
-      WorkSheet.write(Row,5,RecKihon.Soudanbi,Style)
-      for Col in range(6,30):
+      self.SetKihon(WorkSheet,RecKihon,Row,Style)
+      for Col in range(13,30):
         WorkSheet.write(Row,Col," ",Style)
       Row = self.SetByoureki(WorkSheet,RecKihon.KanzyaID,Row,Style)
       
@@ -109,7 +101,7 @@ class MainHandler(webapp2.RequestHandler):
     StyleNolineUnder.borders = Border
     StyleNolineUnder.font.underline = True
 
-    Title = [u"担当",u"氏名",u"性別",u"生年月日",u"住所",u"電話",
+    Title = [u"番号",u"担当",u"氏名",u"性別",u"生年月日",u"住所",u"電話",
              u"相談日",u"障害高齢者自立度",u"認知症高齢者自立度",
              u"認定",u"有効期限",u"前回介護度",u"基本チェックリスト",u"記入日",
              u"難病",u"家族関係の状況",
@@ -127,6 +119,38 @@ class MainHandler(webapp2.RequestHandler):
 
     return
 
+  def SetKihon(self,WS,Rec,Row,Style):  # 基本レコードセット
+
+    WS.write(Row,0,Rec.KanzyaID,Style)
+    WS.write(Row,1,Rec.Tanto,Style)
+    if Rec.Kana == None:
+      Rec.Kana = ""
+    if Rec.Name == None:
+      Rec.Name = ""
+    WS.write(Row,2,Rec.Kana + "\n" + Rec.Name,Style)
+    if Rec.Sex == 1:
+      WS.write(Row,3,u"男",Style)
+    else:
+      WS.write(Row,3,u"女",Style)
+    WS.write(Row,4,Rec.BirthDay.strftime("%Y/%m/%d"),Style)
+    WS.write(Row,5,Rec.Zyusyo.replace("<BR>","\n"),Style)
+    WS.write(Row,6,Rec.Tel,Style)
+    WS.write(Row,7,Rec.Soudanbi.strftime("%Y/%m/%d"),Style) # 相談日
+
+    WS.write(Row,8,Rec.SyogaiZirituDo,Style) # 障害老人自立度
+    WS.write(Row,9,Rec.NintiZirituDo,Style) # 認知症自立度
+    WS.write(Row,10,Rec.Kaigodo,Style) # 認定介護度
+    if Rec.HokenEnd == None:
+      WS.write(Row,11," ",Style) # 有効期限
+    elif Rec.HokenEnd == "":
+      WS.write(Row,11," ",Style) # 有効期限
+    else:
+      WS.write(Row,11,Rec.HokenEnd.strftime("%Y/%m/%d"),Style) # 有効期限
+    WS.write(Row,12,Rec.HokenKaigodo,Style) # 前回介護度
+
+    return
+
+
   def SetByoureki(self,WorkSheet,KanzyaID,Row,Style):  # 病歴セット
 
     OutStr = ""
@@ -142,77 +166,6 @@ class MainHandler(webapp2.RequestHandler):
       break
 
     return Row
-
-  def SetData2(self,WorkSheet,Rec,Row,Style):  # データ部分セット
-
-    Style2 = self.SetStyle("THIN","THIN","THIN","THIN",xlwt.Alignment.VERT_CENTER,xlwt.Alignment.HORZ_CENTER) 
-    font = xlwt.Font() # Create the Font
-    font.height = 130
-    Style2.font = font
-
-    StyleR = self.SetStyle("THIN","THIN","THIN","THIN",xlwt.Alignment.VERT_CENTER,xlwt.Alignment.HORZ_RIGHT) 
-    font = xlwt.Font() # Create the Font
-    font.height = 130
-    StyleR.font = font
-
-    WorkSheet.write(Row,0,Row - 1,Style2)
-    WorkSheet.write(Row,1,Rec.Room,Style2)
-    WorkSheet.write(Row,2,Rec.Name,Style2)
-
-    Goukei = 0
-    if Rec.Futan != None:
-      Goukei -= Rec.Futan
-      OutStr = int(Rec.Futan)
-    else:
-      OutStr = ""
-    WorkSheet.write(Row,3,OutStr,StyleR) # 負担額
-
-    if Rec.Haitu2Kei != None:
-      Goukei += Rec.Haitu2Kei
-      OutStr = int(Rec.Haitu2Kei)
-    else:
-      OutStr = ""
-
-    WorkSheet.write(Row,4,int(Goukei),StyleR) # ハイツⅡ計-負担
-
-    WorkSheet.write(Row,5,OutStr,StyleR) # ハイツ２計
-
-    if Rec.Haitu2Kei != None:
-      Goukei = Rec.Haitu2Kei
-    else:
-      Goukei = 0
-      
-    if Rec.Byouin != None:
-      Goukei += Rec.Byouin
-      OutStr = int(Rec.Byouin)
-    else:
-      OutStr = ""
-    WorkSheet.write(Row,6,OutStr,StyleR)
-
-    if Rec.Yakkyoku != None:
-      Goukei += Rec.Yakkyoku
-      OutStr = int(Rec.Yakkyoku)
-    else:
-      OutStr = ""
-    WorkSheet.write(Row,7,OutStr,StyleR)
-
-    if Rec.Byouin2 != None:
-      Goukei += Rec.Byouin2
-      OutStr = int(Rec.Byouin2)
-    else:
-      OutStr = ""
-    WorkSheet.write(Row,8,OutStr,StyleR)
-
-    OutStr = int(Goukei)
-    WorkSheet.write(Row,9,OutStr,StyleR)
-
-    if Rec.Ryosyubi != None:
-      OutStr = Rec.Ryosyubi.strftime('%Y/%m/%d')
-    else:
-      OutStr = ""
-    WorkSheet.write(Row,10,OutStr,StyleR)
-
-    return
 
   def SetDataGoukei(self,WorkSheet,DataRecs,GoukeiOutCol,Style):  # データ部分セット
 

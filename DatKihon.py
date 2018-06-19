@@ -17,6 +17,7 @@ class DatKihon(db.Model):
   Yubin             = db.StringProperty(multiline=False)      # 郵便番号
   Zyusyo            = db.StringProperty(multiline=True)       # 住所
   Tel               = db.StringProperty(multiline=False)      # 電話番号
+  Fax               = db.StringProperty(multiline=False)      # Fax
   Soudanbi          = db.DateTimeProperty(auto_now_add=False) # 相談日
   Keitai            = db.IntegerProperty()                    # 相談形態
   Kaisu             = db.StringProperty(multiline=False)      # 回数 
