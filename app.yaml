@@ -15,6 +15,33 @@ handlers:
 - url: /Ninchi000/.*
   script: Ninchi000.app
 
+# 相談票一覧画面
+- url: /Yasukawa300/.*
+  script: Yasukawa300.app
+# 相談登録画面
+- url: /Yasukawa310/.*
+  script: Yasukawa310.app
+# 経過記録一覧画面
+- url: /Yasukawa320/.*
+  script: Yasukawa320.app
+# 経過記録登録画面
+- url: /Yasukawa330/.*
+  script: Yasukawa330.app
+
+# 相談受付一覧画面
+- url: /Yasukawa350/.*
+  script: Yasukawa350.app
+# 相談登録画面
+- url: /Yasukawa360/.*
+  script: Yasukawa360.app
+
+# 活動実績報告書1
+- url: /Yasukawa370/.*
+  script: Yasukawa370.app
+# 活動実績報告書2
+- url: /Yasukawa380/.*
+  script: Yasukawa380.app
+
 # 利用者一覧画面
 - url: /Yasukawa100/.*
   script: Yasukawa100.app

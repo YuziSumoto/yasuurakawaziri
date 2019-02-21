@@ -32,6 +32,43 @@ indexes:
   - name: Hizuke
     direction: desc
 
+- kind: DatCase
+  properties:
+  - name: Hizuke
+  - name: Bango
+
+- kind: DatGeppou
+  properties:
+  - name: Nengetu
+  - name: Bango
+
+- kind: DatKaigi
+  properties:
+  - name: Nengetu
+  - name: Bango
+
+- kind: DatKeika
+  properties:
+  - name: Hizuke
+  - name: OyaKey
+  - name: Bango
+    direction: desc
+
+- kind: DatKeika
+  properties:
+  - name: OyaKey
+  - name: Hizuke
+  - name: Bango
+    direction: desc
+
+- kind: DatKeika
+  properties:
+  - name: OyaKey
+  - name: Hizuke
+    direction: desc
+  - name: Bango
+    direction: desc
+
 - kind: DatService
   properties:
   - name: KanzyaID
@@ -52,3 +89,25 @@ indexes:
   properties:
   - name: Kubun
   - name: CD
+
+- kind: MstGyoumuSoudan
+  properties:
+  - name: GyoumuCD
+  - name: Name
+
+- kind: MstGyoumuSoudan
+  properties:
+  - name: GyoumuCD
+  - name: SoudanCD
+
+- kind: MstGyoumuSoudan
+  properties:
+  - name: GyoumuCD
+  - name: SoudanCD
+  - name: Name
+
+- kind: MstGyoumuSoudan
+  properties:
+  - name: SoudanCD
+  - name: GyoumuCD
+  - name: Name

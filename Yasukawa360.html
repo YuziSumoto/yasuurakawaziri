@@ -1,0 +1,183 @@
+<html>
+<head>
+  <style type="text/css">
+    .text  {font-size:XX-LARGE}
+    .button  {font-size:X-LARGE;WIDTH: 200px; HEIGHT:40px}
+		.scr {
+			overflow-y: scroll;   /* スクロール表示 */ 
+			width: 200px;
+			height: 200px;
+		}
+  </style>
+
+	<!-- カレンダー表示用 ↓-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css" >
+	<script>
+	  $(function() {
+	    $("#datepicker").datepicker();
+	  });
+	<!-- カレンダー表示用 ↑-->
+	</script>
+
+	<title>Yasukawa360(ケース登録)</title>
+</head>
+
+<body>
+	<form name="Main" action="/Yasukawa360/" method="post" style="font-size:X-LARGE">
+{{ Hizuke }}
+<table border="1" style="background-color:lightgray">
+  <TR>
+    <TH>ケース名</TH>
+    <TH align="left">
+				<input value="{{ Rec.CaseName|default_if_none:"" }}" name="CaseName" style="width:200px"/>
+    </TH>
+  </TR>
+  <TR>
+    <TH>相談者</TH>
+    <TH align="left">
+			<select name="SoudanSyaCD">
+				{% for MstRec in MstSoudanSya %} 
+					<option value="{{ MstRec.CD }}"
+						{% if Rec.SoudanSyaCD %}{# 指定あり #}
+							{% ifequal Rec.SoudanSyaCD MstRec.CD %} selected {% endifequal %}
+						{% else %} {# 未指定 #}
+							{% ifequal MstRec.CD 0  %}{# 0なら選択（ディフォルト） #}
+						    selected
+						  {% endifequal %}
+						{% endif %}
+					>{{ MstRec.Name}}</option>
+				{% endfor %} 
+			</select>
+    </TH>
+    <TH>方法</TH>
+    <TH align="left">
+			<select name="SoudanHouhou">
+				{% for MstRec in MstKeitai %} 
+					<option value="{{ MstRec.CD }}"
+						{% if Rec.SoudanHouhou %}{# 指定あり #}
+							{% ifequal Rec.SoudanHouhou MstRec.CD %} selected {% endifequal %}
+						{% else %} {# 未指定 #}
+							{% ifequal MstRec.CD 0  %}{# 0なら選択（ディフォルト） #}
+						    selected
+						  {% endifequal %}
+						{% endif %}
+					>{{ MstRec.Name}}</option>
+				{% endfor %} 
+			</select>
+			<input	type="checkbox" name="YakanKubun"		value="True"
+			{% if Rec.YakanKubun %}
+				checked
+			{% endif %}
+			/>夜間休日対応
+    </TH>
+  </TR>
+  <TR>
+    <TH>業務区分</TH>
+    <TH align="left">
+			<select name="GyoumuCD" style="width:200px"  onchange="submit(this.form)"> <!-- 変更したら相談内容書き換え -->
+				{% for MstRec in MstGyoumu %} 
+					<option value="{{ MstRec.GyoumuCD }}"
+						{% if Rec.GyoumuCD %}{# 指定あり #}
+							{% ifequal Rec.GyoumuCD MstRec.GyoumuCD %} selected {% endifequal %}
+						{% else %} {# 未指定 #}
+							{% ifequal MstRec.GyoumuCD 0  %}{# 0なら選択（ディフォルト） #}
+						    selected
+						  {% endifequal %}
+						{% endif %}
+					>{{ MstRec.Name}}</option>
+				{% endfor %} 
+			</select>
+    </TH>
+    <TH>相談内容</TH>
+    <TH align="left">
+			<select name="SoudanCD" style="width:200px">
+				{% for MstRec in MstSoudan %} 
+					<option value="{{ MstRec.SoudanCD }}"
+						{% if Rec.SoudanCD %}{# 指定あり #}
+							{% ifequal Rec.SoudanCD MstRec.SoudanCD %} selected {% endifequal %}
+						{% else %} {# 未指定 #}
+							{% ifequal MstRec.SoudanCD 0  %}{# 0なら選択（ディフォルト） #}
+						    selected
+						  {% endifequal %}
+						{% endif %}
+					>{{ MstRec.Name}}</option>
+				{% endfor %} 
+			</select>
+    </TH>
+  </TR>
+  <TR>
+    <TH>内容詳細</TH>
+    <TH align="left" colspan="3">
+      <textarea name="Naiyo" cols=80 rows6 onkeyup="document.getElementById('NaiyoCtr').value=this.value.length*2">{{Rec.Naiyo|default_if_none:""}}</textarea>
+      <BR>
+			<input	type="checkbox" name="NintiYouin"		value="True"
+			{% if Rec.NintiYouin %}
+				checked
+			{% endif %}
+			/>認知症要因あり
+    </TH>
+  </TR>
+  <TR>
+    <TH>対応者</TH>
+    <TH align="left" colspan="3">
+			<select name="TantouSyaCD">
+				{% for MstRec in MstTanto %} 
+					<option value="{{ MstRec.CD }}"
+						{% if Rec.TantouSyaCD %}{# 指定あり #}
+							{% ifequal Rec.TantouSyaCD MstRec.CD %} selected {% endifequal %}
+						{% else %} {# 未指定 #}
+							{% ifequal MstRec.CD 0  %}{# 0なら選択（ディフォルト） #}
+						    selected
+						  {% endifequal %}
+						{% endif %}
+					>{{ MstRec.Name}}</option>
+				{% endfor %} 
+			</select>
+			<input	type="checkbox" name="NintiSuisin"		value="True"
+			{% if Rec.NintiSuisin %}
+				checked
+			{% endif %}
+			/>認知症地域推進員対応
+    </TH>
+  </TR>
+  <TR>
+    <TH>確認書</TH>
+    <TH align="left" colspan="3">
+			<select name="KakuninSyoCD">
+				{% for MstRec in MstKakuninSyo %} 
+					<option value="{{ MstRec.CD }}"
+						{% if Rec.KakuninSyoCD %}{# 指定あり #}
+							{% ifequal Rec.KakuninSyoCD MstRec.CD %} selected {% endifequal %}
+						{% else %} {# 未指定 #}
+							{% ifequal MstRec.CD 0  %}{# 0なら選択（ディフォルト） #}
+						    selected
+						  {% endifequal %}
+						{% endif %}
+					>{{ MstRec.Name}}</option>
+				{% endfor %} 
+			</select>
+			
+			<input	type="checkbox" name="KakuninGaitou"		value="True"
+			{% if Rec.KakuninGaitou %}
+				checked
+			{% endif %}
+			/>確認書該当者
+    </TH>
+  </TR>
+
+</table>
+{{	LblMsg	}}
+<BR>
+	<input type="button" class="button"
+		value="中止" onclick="location.href='/Yasukawa350/?Hizuke={{ Hizuke }}'">
+　　
+	<input type="submit" value = "終了" name="BtnEnd" class="button"> <!-- 保存して一覧へ -->
+
+</form>
+
+</body>
+
+</html>

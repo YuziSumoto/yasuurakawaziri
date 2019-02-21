@@ -1,0 +1,73 @@
+<html>
+<head>
+  <style type="text/css">
+    .text  {font-size:XX-LARGE}
+    .button  {font-size:X-LARGE;WIDTH: 200px; HEIGHT:40px}
+		.scr {
+			overflow-y: scroll;   /* スクロール表示 */ 
+			width: 200px;
+			height: 200px;
+		}
+  </style>
+
+	<!-- カレンダー表示用 ↓-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css" >
+	<script>
+	  $(function() {
+	    $("#datepicker").datepicker();
+	  });
+	</script>
+	<!-- カレンダー表示用 ↑-->
+
+	<title>Yasukawa330(経過登録)</title>
+</head>
+
+<body>
+	<form name="Main" action="/Yasukawa330/" method="post" style="font-size:X-LARGE">
+<table border="1" style="background-color:lightgray">
+  <TR>
+    <TH>日付</TH>
+    <TH align="left">
+      <input type="date" value="{{ Rec.Hizuke|date:'Y-m-d' }}" name="Hizuke" style="width:200px"/><BR>
+    </TH>
+    <TH align="left">
+      番号
+    </TH>
+    <TH align="left">
+      {{ Rec.Bango|default_if_none:""}}
+    </TH>
+  </TR>
+
+  <TR>
+    <TH valign="top">
+      経過記録<BR><BR>
+      <input type="text" id="NaiyoCtr" disabled="disabled"  style="width:40px" >/1000
+    </TH>
+    <TD valign="top" colspan="3">
+      <textarea name="Naiyo" cols=100 rows=10 onkeyup="document.getElementById('NaiyoCtr').value=this.value.length*2">{{Rec.Naiyo|default_if_none:""}}</textarea>
+    </TD>
+  </TR>
+</table>
+{{	LblMsg	}}
+<BR>
+	<input type="button" class="button"
+		value="中止" onclick="location.href='/Yasukawa320/?Key={{OyaKey}}'">
+　　
+	<input type="submit" value = "決定" name="BtnEnd" class="button">
+
+<!--
+
+	<input type="submit" value = "終了" name="BtnYasukawa200" class="button"> {# 終了時に保存するから一旦post #}
+-->
+<!--
+<input type="submit" value = "終了" name="BtnKettei" class="button"><BR>
+-->
+
+</form>
+
+</body>
+
+</html>

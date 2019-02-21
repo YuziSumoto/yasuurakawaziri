@@ -1,0 +1,98 @@
+<html>
+<head>
+  <style type="text/css">
+    .text  {font-size:XX-LARGE}
+    .button  {font-size:X-LARGE;WIDTH: 200px; HEIGHT:40px}
+    .button2  {font-size:X-LARGE;WIDTH: 400px; HEIGHT:40px}
+		.scr {
+			overflow-y: scroll;   /* スクロール表示 */ 
+			width: 560px;
+			height: 600px;
+			border: 1px double #000000; 
+		}
+		table {
+			width:420px;
+			font-size:SMALL;
+			table-layout:fixed;
+		}
+		TH {
+		background-color:lightgray
+		}
+  </style>
+	<title>Yasukawa300</title>
+</head>
+
+<body>
+	<form name="Main" action="/Yasukawa300/" method="post" style="font-size:X-LARGE">
+<table border="1">
+	<TR>
+		<TH Width="80px">日付</TH>
+		<TH Width="80px">相談方法</TH>
+		<TH Width="100px">氏名			</TH>
+		<TH Width="30px">性別			</TH>
+		<TH Width="80px">住所			</TH>
+		<TH Width="80px">経過記録	</TH>
+		<TH Width="50px">削除			</TH>
+	</TR>
+</table>
+<DIV class="scr">
+<table border="1">
+	<TR> <!-- # 枠幅設定用行なので高さは０ -->
+		<TH Height="0" Width="81px" style="border-style:none"></TH>
+		<TH Height="0" Width="82px" style="border-style:none"></TH>
+		<TH Height="0" Width="102px" style="border-style:none"></TH>
+		<TH Height="0" Width="32px" style="border-style:none"></TH>
+		<TH Height="0" Width="82px" style="border-style:none"></TH>
+		<TH Height="0" Width="82px" style="border-style:none"></TH>
+		<TH Height="0" Width="51px" style="border-style:none"></TH>
+	</TR>
+	{% for Rec in Snap %} 
+		<TR align="center">
+			<TD>{{ Rec.Hizuke|date:'Y/m/d' }}</TD>
+			<TD>{{ Rec.Houhou|default_if_none:"" }}</TD>
+			<TD>
+				<input type="button" style="WIDTH:100px"
+					value="{{ Rec.Name }}" onclick="location.href='/Yasukawa310/?Key={{ Rec.key }}'">
+			</TD>
+			<TD>
+				{% ifequal Rec.Sex 1 %}
+					男
+				{% else %}
+					女
+				{% endifequal %}		
+			</TD>
+			<TD align="left">
+				{{ Rec.Zyusyo|safe|default_if_none:"" }}
+			</TD>
+			<TD>
+				<input type="button"  style="WIDTH:78px"
+					value="経過記録" onclick="location.href='/Yasukawa320/?Key={{ Rec.key }}'">
+			</TD>
+			<TD>
+				<input type="submit" style="WIDTH:48px" Name="BtnDel{{ Rec.key }}"
+				value = "削除">
+			</TD>
+		</TR>
+	{% endfor %}
+
+</table>
+</DIV>
+
+<BR>
+{{  LblMsg }}
+<BR>
+<BR>
+
+	<input type="button" class="button"
+		value="新規登録" onclick="location.href='/Yasukawa310/'">
+　　
+
+	<input type="button" class="button"
+		value="終了" onclick="location.href='/'">
+　　
+
+</form>
+
+</body>
+
+</html>

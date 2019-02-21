@@ -1,0 +1,375 @@
+<html>
+<head>
+  <style type="text/css">
+    input    {font-size:medium}
+    textarea {font-size:medium}
+    .button  {font-size:X-LARGE;WIDTH: 200px; HEIGHT:40px}
+		input#goukei {width:50px;background-color:lightgray}
+		input#kensu  {width:50px}
+		table {background-color:lightgray;font-size:medium} 
+		a     {font-size:medium}
+		.scr {
+			overflow-y: scroll;   /* スクロール表示 */ 
+			width: 200px;
+			height: 200px;
+		}
+  </style>
+  <script type="text/javascript">
+  function sum(){
+    gamen = document.Main
+
+    total = 0
+    if (!gamen.Kaisu6.value == ""){total = total + parseInt(gamen.Kaisu6.value);}
+    if (!gamen.Kaisu7.value == ""){total = total + parseInt(gamen.Kaisu7.value);}
+    if (!gamen.Kaisu8.value == ""){total = total + parseInt(gamen.Kaisu8.value);}
+    if (!gamen.Kaisu9.value == ""){total = total + parseInt(gamen.Kaisu9.value);}
+    gamen.KaisuKei.value = total;
+
+    total = 0
+    if (!gamen.Kensu12.value == ""){total = total + parseInt(gamen.Kensu12.value);}
+    if (!gamen.Kensu14.value == ""){total = total + parseInt(gamen.Kensu14.value);}
+    if (!gamen.Kensu16.value == ""){total = total + parseInt(gamen.Kensu16.value);}
+    gamen.KensuKei1.value = total;
+
+    total = 0
+    if (!gamen.Kensu13.value == ""){total = total + parseInt(gamen.Kensu13.value);}
+    if (!gamen.Kensu15.value == ""){total = total + parseInt(gamen.Kensu15.value);}
+    if (!gamen.Kensu17.value == ""){total = total + parseInt(gamen.Kensu17.value);}
+    gamen.KensuKei2.value = total;
+
+  }
+  </script>
+	<title>Yasukawa380</title>
+</head>
+
+<body>
+	<form name="Main" action="/Yasukawa380/" method="post" style="font-size:X-LARGE">
+
+<p style="text-align: center">
+地域包括支援センター活動実績報告書（{{ Hizuke|date:'Y/m' }}分）
+</p>
+
+<a>２．地域ケア会議</a>
+<table border="1">
+  <TR>
+    <TH style="width:100px"/>年月日</TH>
+    <TD>
+			<input type="date"
+				 value="{{ Rec.Hizuke0|date:'Y-m-d' }}" name="Hizuke0" />
+		</TD>
+    <TD>
+			<input type="date"
+				 value="{{ Rec.Hizuke1|date:'Y-m-d' }}" name="Hizuke1" />
+		</TD>
+	</TR>
+	<TR>
+		<TH>会議内容</TH>
+		<TD>
+			<input  style="width:200px"
+				value="{{ Rec.Naiyo0|default_if_none:"" }}" name="Naiyo0"/>
+		</TD>
+		<TD>
+			<input  style="width:200px"
+				value="{{ Rec.Naiyo1|default_if_none:"" }}" name="Naiyo1"/>
+		</TD>
+	</TR>
+	<TR>
+		<TH>出席者</TH>
+		<TD>
+      <textarea name="Syusseki0" cols=40 rows=2
+      	>{{Rec.Syusseki0|default_if_none:""}}</textarea>
+		</TD>
+		<TD>
+      <textarea name="Syusseki1" cols=40 rows=2
+      	>{{Rec.Syusseki1|default_if_none:""}}</textarea>
+		</TD>
+	</TR>
+	
+</table>
+<BR>
+<a>３．その他ケア会議</a>
+<table border="1">
+  <TR>
+    <TH style="width:100px"/>年月日</TH>
+    <TD>
+			<input type="date" value="{{ Rec.Hizuke2|date:'Y-m-d' }}" name="Hizuke2" />
+		</TD>
+    <TD>
+			<input type="date" value="{{ Rec.Hizuke3|date:'Y-m-d' }}" name="Hizuke3" />
+		</TD>
+	</TR>
+	<TR>
+		<TH>会議内容</TH>
+		<TD>
+			<input  style="width:200px"
+				value="{{ Rec.Naiyo2|default_if_none:"" }}" name="Naiyo2"/>
+		</TD>
+		<TD>
+			<input  style="width:200px"
+				value="{{ Rec.Naiyo3|default_if_none:"" }}" name="Naiyo3"/>
+		</TD>
+	</TR>
+	<TR>
+		<TH>出席者</TH>
+		<TD>
+      <textarea name="Syusseki2" cols=40 rows=2
+      	>{{Rec.Syusseki2|default_if_none:""}}</textarea>
+		</TD>
+		<TD>
+      <textarea name="Syusseki3" cols=40 rows=2
+      	>{{Rec.Syusseki3|default_if_none:""}}</textarea>
+		</TD>
+	</TR>
+</table>
+<BR>
+<a>４．研修会・情報交換会等（主催または共済したものに限る）</a>
+<table border="1">
+  <TR>
+		<TH style="width:100px"/>年月日</TH>
+    <TD>
+			<input type="date" value="{{ Rec.Hizuke4|date:'Y-m-d' }}" name="Hizuke4" />
+		</TD>
+    <TD>
+			<input type="date" value="{{ Rec.Hizuke5|date:'Y-m-d' }}" name="Hizuke5" />
+		</TD>
+	</TR>
+	<TR>
+		<TH>表題</TH>
+		<TD>
+			<input  style="width:200px"
+				value="{{ Rec.Title4|default_if_none:"" }}" name="Title4"/>
+		</TD>
+		<TD>
+			<input  style="width:200px"
+				value="{{ Rec.Title5|default_if_none:"" }}" name="Title5"/>
+		</TD>
+	</TR>
+	<TR>
+		<TH>内容</TH>
+		<TD>
+			<input  style="width:200px"
+				value="{{ Rec.Naiyo4|default_if_none:"" }}" name="Naiyo4"/>
+		</TD>
+		<TD>
+			<input  style="width:200px"
+				value="{{ Rec.Naiyo5|default_if_none:"" }}" name="Naiyo5"/>
+		</TD>
+	</TR>
+	<TR>
+		<TH>参加者</TH>
+		<TD>
+      <textarea name="Syusseki4" cols=40 rows=2
+      	>{{Rec.Syusseki4|default_if_none:""}}</textarea>
+		</TD>
+		<TD>
+      <textarea name="Syusseki5" cols=40 rows=2
+      	>{{Rec.Syusseki5|default_if_none:""}}</textarea>
+		</TD>
+	</TR>
+	
+</table>
+<BR>
+<a>５．一般介護予防事業等実施（支援）状況</a>
+<table border="1">
+  <TR>
+		<TH style="width:100px"/>事業名</TH>
+		<TH style="width:50px"/>回数</TH>
+		<TH style="width:100px"/>事業名</TH>
+		<TH style="width:50px"/>回数</TH>
+	</TR>
+	<TR>
+		<TD>
+			<input  style="width:300px"
+				value="{{ Rec.Title6|default_if_none:"" }}" name="Title6"/>
+		</TD>
+		<TD>
+			<input type="number" id="kensu" onChange="sum()"
+				value="{{ Rec.Kaisu6|default_if_none:"" }}" name="Kaisu6"/>
+		</TD>
+		<TD>
+			<input  style="width:300px"
+				value="{{ Rec.Title7|default_if_none:"" }}" name="Title7"/>
+		</TD>
+		<TD>
+			<input type="number" id="kensu" onChange="sum()"
+				value="{{ Rec.Kaisu7|default_if_none:"" }}" name="Kaisu7"/>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<input  style="width:300px"
+				value="{{ Rec.Title8|default_if_none:"" }}" name="Title8"/>
+		</TD>
+		<TD>
+			<input type="number" id="kensu" onChange="sum()"
+				value="{{ Rec.Kaisu8|default_if_none:"" }}" name="Kaisu8"/>
+		</TD>
+		<TD>
+			<input  style="width:300px"
+				value="{{ Rec.Title9|default_if_none:"" }}" name="Title9"/>
+		</TD>
+		<TD>
+			<input type="number" id="kensu" onChange="sum()"
+				value="{{ Rec.Kaisu9|default_if_none:"" }}" name="Kaisu9"	/>
+		</TD>
+	</TR>
+	<TR>
+		<TD colspan="3" align="right">
+			打合せ、反省会は除く　　　　　計
+		</TD>
+		<TH>
+			<input type="text" name="KaisuKei" id="goukei" readonly
+			 value="{{ Rec.KaisuKei|default_if_none:"" }}" /></td>
+		</TH>
+	</TR>
+</table>
+<BR>
+<a>６．介護予防ケアマネジメント</a><BR>
+<a>　(1)予防給付で請求した人</a>
+<table border="1">
+  <TR>
+		<TH style="width:100px">区分</TH>
+		<TH style="width:200px">合計件数(内新規件数)</TH>
+		<TH style="width:200px">当月サービス提供</TH>
+		<TH style="width:200px">月遅れ分</TH>
+	</TR>
+	<TR>
+		<TH>直営プラン</TH>
+		<TD>
+			<input type="number" id="kensu"
+				value="{{ Rec.Kensu0|default_if_none:"" }}" name="Kensu0"/>
+		</TD>
+		<TD>
+			<input type="number" id="kensu"
+				value="{{ Rec.Kensu1|default_if_none:"" }}" name="Kensu1"/>
+		</TD>
+		<TD>
+			<input type="number" id="kensu"
+				value="{{ Rec.Kensu2|default_if_none:"" }}" name="Kensu2"/>
+		</TD>
+	</TR>
+	<TR>
+		<TH>委託プラン</TH>
+		<TD>
+			<input type="number" id="kensu"
+				value="{{ Rec.Kensu3|default_if_none:"" }}" name="Kensu3"/>
+		</TD>
+		<TD>
+			<input type="number" id="kensu"
+				value="{{ Rec.Kensu4|default_if_none:"" }}" name="Kensu4"/>
+		</TD>
+		<TD>
+			<input type="number" id="kensu"
+				value="{{ Rec.Kensu5|default_if_none:"" }}" name="Kensu5"/>
+		</TD>
+	</TR>
+</table>
+<a>　　　　　　　※月遅れ分：請求は当月だが、サービスの提供は当月より前のもの</a><BR>
+<a>　(2)生活支援サービスのみで請求した人</a>
+<table border="1">
+  <TR>
+		<TH style="width:100px">区分</TH>
+		<TH style="width:200px">合計件数(内新規件数)</TH>
+		<TH style="width:200px">当月サービス提供</TH>
+		<TH style="width:200px">月遅れ分</TH>
+	</TR>
+	<TR>
+		<TH>直営プラン</TH>
+		<TD>
+			<input type="number" id="kensu"
+				value="{{ Rec.Kensu6|default_if_none:"" }}" name="Kensu6"/>
+		</TD>
+		<TD>
+			<input type="number" id="kensu"
+				value="{{ Rec.Kensu7|default_if_none:"" }}" name="Kensu7"/>
+		</TD>
+		<TD>
+			<input type="number" id="kensu"
+				value="{{ Rec.Kensu8|default_if_none:"" }}" name="Kensu8"/>
+		</TD>
+	</TR>
+	<TR>
+		<TH>委託プラン</TH>
+		<TD>
+			<input type="number" id="kensu"
+				value="{{ Rec.Kensu9|default_if_none:"" }}" name="Kensu9"/>
+		</TD>
+		<TD>
+			<input type="number" id="kensu"
+				value="{{ Rec.Kensu10|default_if_none:"" }}" name="Kensu10"/>
+		</TD>
+		<TD>
+			<input type="number" id="kensu"
+				value="{{ Rec.Kensu11|default_if_none:"" }}" name="Kensu11"/>
+		</TD>
+	</TR>
+</table>
+<a>　(3)確認書記入者数</a>
+<table border="1">
+  <TR>
+		<TH colspan="2">区分</TH>
+		<TH style="width:100px">件数</TH>
+		<TH style="width:100px">うち該当者数</TH>
+	</TR>
+	<TR>
+		<TH rowspan="2">個別</TH>
+		<TH>窓口</TH>
+		<TD>
+			<input type="number" id="kensu" onChange="sum()"
+				value="{{ Rec.Kensu12|default_if_none:"" }}" name="Kensu12"/>
+		</TD>
+		<TD>
+			<input type="number" id="kensu" onChange="sum()"
+				value="{{ Rec.Kensu13|default_if_none:"" }}" name="Kensu13"/>
+		</TD>
+	</TR>
+	<TR>
+		<TH>訪問</TH>
+		<TD>
+			<input type="number" id="kensu" onChange="sum()"
+				value="{{ Rec.Kensu14|default_if_none:"" }}" name="Kensu14"/>
+		</TD>
+		<TD>
+			<input type="number" id="kensu" onChange="sum()"
+				value="{{ Rec.Kensu15|default_if_none:"" }}" name="Kensu15"/>
+		</TD>
+	</TR>
+	<TR>
+		<TH colspan="2">その他受付分</TH>
+		<TD>
+			<input type="number" id="kensu" onChange="sum()"
+				value="{{ Rec.Kensu16|default_if_none:"" }}" name="Kensu16"/>
+		</TD>
+		<TD>
+			<input type="number" id="kensu" onChange="sum()"
+				value="{{ Rec.Kensu17|default_if_none:"" }}" name="Kensu17"/>
+		</TD>
+	</TR>
+	<TR>
+		<TH colspan="2">合計</TH>
+		<TD>
+			<input type="text"  name="KensuKei1" id="goukei" readonly
+			 value="{{ Rec.KensuKei1|default_if_none:"" }}" /></td>
+		</TD>
+		<TD>
+			<input type="text"  name="KensuKei2" id="goukei" readonly
+			 value="{{ Rec.KensuKei2|default_if_none:"" }}" /></td>
+		</TD>
+	</TR>
+</table>
+<BR>
+<a>７．介護マーク配布数　　　　　
+	<input type="number" id="kensu"
+		value="{{ Rec.Kensu18|default_if_none:"" }}" name="Kensu18"/>
+</a>
+<BR>
+{{	LblMsg	}}
+<BR>
+	<input type="button" class="button"
+		value="中止" onclick="location.href='/Yasukawa370/?Hizuke={{Hizuke|date:'Y/m/d'}}'">
+
+	<input type="submit" value = "決定" name="BtnEnd" class="button"> <!-- 保存して一覧へ -->
+
+</form>
+</body>
+</html>

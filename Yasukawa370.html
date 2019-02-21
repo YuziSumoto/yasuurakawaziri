@@ -1,0 +1,153 @@
+<html>
+<head>
+  <style type="text/css">
+    .text  {font-size:XX-LARGE}
+    .button  {font-size:X-LARGE;WIDTH: 200px; HEIGHT:40px}
+		th      {background-color:lightgray}
+		.scr {
+			overflow-y: scroll;   /* スクロール表示 */ 
+			width: 200px;
+			height: 200px;
+		}
+  </style>
+
+	<!-- カレンダー表示用 ↓-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css" >
+	<script>
+	  $(function() {
+	    $("#datepicker").datepicker();
+	  });
+	</script>
+	<!-- カレンダー表示用 ↑-->
+
+	<title>Yasukawa370(活動実績報告書1)</title>
+</head>
+
+<body>
+	<form name="Main" action="/Yasukawa370/" method="post" style="font-size:LARGE">
+<p style="text-align: center">
+地域包括支援センター活動実績報告書（{{ Hizuke|date:'Y/m' }}分）
+</p>
+<p style="text-align: right">
+<u>
+　　市　名　　　　　呉市　　　　　　　<BR>
+　　センター地域名　川尻安浦地域包括　
+</u>
+</p>
+１．相談実績<BR>
+　(1)相談者別内訳
+<table border="1">
+  <TR>
+    <TH  colspan="2" rowspan="2">
+      対応区分
+    </TH>
+    <TH rowspan="2">
+      件数
+    </TH>
+    <TH align="center" colspan="4">
+			相談者
+    </TH>
+    <TH rowspan="2">
+      夜間休日<BR>対応したもの<BR>(再掲)
+    </TH>
+  </TR>
+  <TR>
+    <TH>本人</TH>
+    <TH>家族</TH>
+    <TH>関係機関</TH>
+    <TH>その他</TH>
+  </TR>
+	{% for Rec in Snap1 %} 
+		<TR>
+			{% if Rec.Title2 == "" %}
+				{% if Rec.Title1 == "Total" %}
+					<TH colspan="2">合計</TH>
+				{% else %}
+					<TH colspan="2">{{ Rec.Title1 }}</TH>
+				{% endif %}
+			{% else %}
+				<TH>{{ Rec.Title1 }}</TH>
+				<TH>{{ Rec.Title2 }}</TH>
+			{% endif %}
+			{% for Kensu in Rec.Kensu %} 
+				{% if Rec.Title1 == "Total" %}
+					<TH align="right">{{Kensu|default_if_none:""}}</TH>
+				{% else %}
+					<TD align="right">{{Kensu|default_if_none:""}}</TD>
+				{% endif %}
+			{% endfor %}
+		</TR>
+	{% endfor %}
+
+</table>
+　　　*(A)欄は上下で必ず合致のこと。<BR>
+　(2)相談内容別内訳
+<table border="1">
+  <TR>
+    <TD  colspan="7" align="left">
+    </TD>
+    <TH colspan="2">
+      *うち、認知症を要因と<BR>考えられるものを再掲
+    </TH>
+  </TR>
+  <TR>
+    <TH align="left" colspan="2">業務区分</TH>
+    <TH rowspan="2">件数</TH>
+    <TH colspan="4">相談者</TH>
+    <TH rowspan="2">認知症地域<BR>推進員の<BR>対応(再掲)</TH>
+    <TH rowspan="2">その他<BR>職員の<BR>対応(再掲)</TH>
+  </TR>
+  <TR>
+    <TH align="left" colspan="2">　　　相談内容</TH>
+    <TH>本人</TH>
+    <TH>家族</TH>
+    <TH>関係機関</TH>
+    <TH>その他</TH>
+  </TR>
+
+	{% for Rec in Snap2 %} 
+		<TR>
+			{% if Rec.Title == "ToTal" %}
+	  		<TH colspan="2" align="center">合計</TH>
+			{% else %}
+	  		<TH colspan="2" align="left">{{ Rec.Title }}</TH>
+			{% endif %}
+			{% for Kensu in Rec.Kensu %} 
+				{% if Rec.Title == "ToTal" or Rec.Align == "left" %}
+					<TH align="right">{{Kensu|default_if_none:""}}</TH>
+				{% else %}
+					<TD align="right">{{Kensu|default_if_none:""}}</TD>
+				{% endif %}
+			{% endfor %}
+		</TR>
+	{% endfor %}
+
+</table>
+
+注１）(1)相談者別と(2)相談内容別の合計及び内訳(A)は、それぞれ突合させてください。<BR>
+注２）高齢者虐待に関する相談は、別途「虐待報告様式」の数値と合致させて下さい。
+
+{{	LblMsg	}}
+<BR>
+
+	<input type="button" class="button"
+		value="会議等" onclick="location.href='/Yasukawa380/?Hizuke={{ Hizuke|date:'Y/m/d' }}'">
+
+	<input type="button" class="button"
+		value="前月" onclick="location.href='/Yasukawa370/?Hizuke={{ ZenGetu }}'">
+
+	<input type="button" class="button"
+		value="翌月" onclick="location.href='/Yasukawa370/?Hizuke={{ YokuGetu }}'">
+　　
+	<input type="button" class="button"
+		value="終了" onclick="location.href='/'">
+
+
+</form>
+
+</body>
+
+</html>
