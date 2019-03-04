@@ -48,10 +48,26 @@ class MstGyoumuSoudan(db.Model):
     Query = db.GqlQuery(Sql)
     return Query.fetch(Query.count())[0]
 
-  def DelRec(self,CD): # 指定CDのデータ削除
+  def GetRecKey(self,Key): # 指定keyのデータ取得
 
     Sql =  "SELECT * FROM " + self.__class__.__name__
-    Sql +=  " Where CD = " + str(CD)
+    Sql +=  " Where __key__ = KEY('" + str(Key) + "')"
+    Query = db.GqlQuery(Sql)
+    return Query.fetch(Query.count())[0]
+
+  def DelRec(self,GyoumuCD,SoudanCD): # 指定CDのデータ削除
+
+    Sql =  "SELECT * FROM " + self.__class__.__name__
+    Sql +=  " Where GyoumuCD = " + str(GyoumuCD) 
+    Sql +=  "  And  SoudanCD = " + str(SoudanCD) 
+    Snap = db.GqlQuery(Sql)
+    for Rec in Snap:
+       Rec.delete()
+
+  def DelRecKey(self,Key): # 指定キーのデータ削除
+
+    Sql =  "SELECT * FROM " + self.__class__.__name__
+    Sql +=  " Where __key__ = KEY('" + str(Key) + "')"
     Snap = db.GqlQuery(Sql)
     for Rec in Snap:
        Rec.delete()

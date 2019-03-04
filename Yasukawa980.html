@@ -1,0 +1,64 @@
+<html>
+<head>
+  <style type="text/css">
+    .text  {font-size:XX-LARGE}
+    .button  {font-size:X-LARGE;WIDTH: 200px; HEIGHT:40px}
+    .button2  {font-size:X-LARGE;WIDTH: 400px; HEIGHT:40px}
+		.scr {
+			overflow-y: scroll;   /* スクロール表示 */ 
+			width: 1142px;
+			height: 600px;
+			border: 1px double #000000; 
+		}
+  </style>
+	<title>Yasukawa960</title>
+</head>
+
+<body>
+	<form name="MAIN" action="/Yasukawa980/" method="post">
+
+<TABLE Border="1">
+	<TR>
+		<TH>業務コード</TH>
+		<TH>相談コード</TH>
+		<TH width="200px">名称</TH>
+		<TH>削除</TH>
+	</TR>
+	{% for Rec in Snap %} 
+		{% ifequal Rec.SoudanCD 0 %}
+			<TR style="background-color:lightgray">
+		{% else %}
+			<TR>
+		{% endifequal %}
+		<TD>
+			{{ Rec.GyoumuCD }}
+		</TD>
+		<TD>
+			{{ Rec.SoudanCD }}
+		</TD>
+		<TD>
+			<input type="button" style="WIDTH:300px"
+				value="{{ Rec.Name }}" onclick="location.href='/Yasukawa985/?Key={{ Rec.key }}'">
+		</TD>
+		<TD>
+			<input type='submit' value = "削除"
+				name='BtnDel{{ Rec.key }}'>
+		</TD>
+	</TR>
+	{% endfor %} 
+</TABLE>
+
+<BR>
+
+	<input type="button" class="button"
+		value="新規登録" onclick="location.href='/Yasukawa985/'">
+　　　　　
+	<input type="button" class="button"
+		value="終了" onclick="location.href='/Yasukawa900/'">
+
+<p	class="LblMsg">{{ LblMsg }}</p>
+
+</form>
+</body>
+
+</html>

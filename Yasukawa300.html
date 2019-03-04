@@ -24,6 +24,14 @@
 
 <body>
 	<form name="Main" action="/Yasukawa300/" method="post" style="font-size:X-LARGE">
+	<input type="radio" name="Kubun" value="1" onchange="submit(this.form)"
+		{% ifequal Kubun "1" %}checked{% endifequal %}
+	 >日付順
+  <input type="radio" name="Kubun" value="2" onchange="submit(this.form)"
+		{% ifequal Kubun "2" %}checked{% endifequal %}
+	>５０音順
+
+
 <table border="1">
 	<TR>
 		<TH Width="80px">日付</TH>
@@ -70,6 +78,7 @@
 			</TD>
 			<TD>
 				<input type="submit" style="WIDTH:48px" Name="BtnDel{{ Rec.key }}"
+				onclick='return confirm("本当に削除しますか");'
 				value = "削除">
 			</TD>
 		</TR>

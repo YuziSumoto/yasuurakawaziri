@@ -34,12 +34,17 @@ class DatSoudan(db.Model):
   Taiou             = db.StringProperty(multiline=True)       # 対応
 
 
-  def GetAll(self): # 全データ取得
+  def GetAll(self,Kubun): # 全データ取得
 
     WKeitai = MstKeitai()
 
     Sql =  "SELECT * From " + self.__class__.__name__
-    Sql += "    Order By Hizuke Desc"
+
+    if int(Kubun) == 1:
+      Sql += "    Order By Hizuke Desc"
+    else:
+      Sql += "    Order By Kana"
+
     Query = db.GqlQuery(Sql)
     Snap = Query.fetch(Query.count())
     for Rec in Snap:

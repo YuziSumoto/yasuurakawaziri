@@ -83,6 +83,26 @@ handlers:
 # マスタメンテメニュー
 - url: /Yasukawa900/.*
   script: Yasukawa900.app
+# 形態マスタ一覧
+- url: /Yasukawa970/.*
+  script: Yasukawa970.app
+# 形態マスタマスタメンテ
+- url: /Yasukawa975/.*
+  script: Yasukawa975.app
+# 業務相談マスタ一覧
+- url: /Yasukawa980/.*
+  script: Yasukawa980.app
+# 業務相談マスタメンテ
+- url: /Yasukawa985/.*
+  script: Yasukawa985.app
+
+# 担当者マスタ一覧
+- url: /Yasukawa1000/.*
+  script: Yasukawa1000.app
+# 担当者マスタメンテ
+- url: /Yasukawa1005/.*
+  script: Yasukawa1005.app
+
 # 地域マスタ一覧
 - url: /Yasukawa910/.*
   script: Yasukawa910.app
@@ -119,12 +139,6 @@ handlers:
 # サービスマスタメンテ
 - url: /Yasukawa965/.*
   script: Yasukawa965.app
-# 形態マスタ一覧
-- url: /Yasukawa970/.*
-  script: Yasukawa970.app
-# 形態マスタマスタメンテ
-- url: /Yasukawa975/.*
-  script: Yasukawa975.app
 
 # ＣＳＶ取り込み
 - url: /Yasukawa990/.*

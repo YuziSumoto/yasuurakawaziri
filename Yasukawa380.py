@@ -91,14 +91,18 @@ class MainHandler(webapp2.RequestHandler):
       RetRec["Kaisu" + str(Rec.Bango)] = Rec.Kaisu
 
     RetRec["KaisuKei"] = 0
-    if RetRec["Kaisu6"] is not None:
-      RetRec["KaisuKei"] +=  int(RetRec["Kaisu6"]) 
-    if RetRec["Kaisu7"] is not None:
-      RetRec["KaisuKei"] +=  int(RetRec["Kaisu7"]) 
-    if RetRec["Kaisu8"] is not None:
-      RetRec["KaisuKei"] +=  int(RetRec["Kaisu8"]) 
-    if RetRec["Kaisu9"] is not None:
-      RetRec["KaisuKei"] +=  int(RetRec["Kaisu9"]) 
+    if RetRec.has_key("Kaisu6"):
+      if RetRec["Kaisu6"] is not None:
+        RetRec["KaisuKei"] +=  int(RetRec["Kaisu6"]) 
+    if RetRec.has_key("Kaisu7"):
+      if RetRec["Kaisu7"] is not None:
+        RetRec["KaisuKei"] +=  int(RetRec["Kaisu7"]) 
+    if RetRec.has_key("Kaisu8"):
+      if RetRec["Kaisu8"] is not None:
+        RetRec["KaisuKei"] +=  int(RetRec["Kaisu8"]) 
+    if RetRec.has_key("Kaisu9"):
+      if RetRec["Kaisu9"] is not None:
+        RetRec["KaisuKei"] +=  int(RetRec["Kaisu9"]) 
 
     Snap = DatGeppou().GetList(Hizuke) # レコード読込
 
@@ -106,20 +110,26 @@ class MainHandler(webapp2.RequestHandler):
       RetRec["Kensu" + str(Rec.Bango)] = Rec.Kensu
 
     RetRec["KensuKei1"] = 0
-    if RetRec["Kensu12"] is not None:
-      RetRec["KensuKei1"] +=  int(RetRec["Kensu12"]) 
-    if RetRec["Kensu14"] is not None:
-      RetRec["KensuKei1"] +=  int(RetRec["Kensu14"]) 
-    if RetRec["Kensu16"] is not None:
-      RetRec["KensuKei1"] +=  int(RetRec["Kensu16"]) 
+    if RetRec.has_key("Kensu12"):
+      if RetRec["Kensu12"] is not None:
+        RetRec["KensuKei1"] +=  int(RetRec["Kensu12"]) 
+    if RetRec.has_key("Kensu14"):
+      if RetRec["Kensu14"] is not None:
+        RetRec["KensuKei1"] +=  int(RetRec["Kensu14"]) 
+    if RetRec.has_key("Kensu16"):
+      if RetRec["Kensu16"] is not None:
+        RetRec["KensuKei1"] +=  int(RetRec["Kensu16"]) 
 
     RetRec["KensuKei2"] = 0
-    if RetRec["Kensu13"] is not None:
-      RetRec["KensuKei2"] +=  int(RetRec["Kensu13"]) 
-    if RetRec["Kensu15"] is not None:
-      RetRec["KensuKei2"] +=  int(RetRec["Kensu15"]) 
-    if RetRec["Kensu17"] is not None:
-      RetRec["KensuKei2"] +=  int(RetRec["Kensu17"]) 
+    if RetRec.has_key("Kensu13"):
+      if RetRec["Kensu13"] is not None:
+        RetRec["KensuKei2"] +=  int(RetRec["Kensu13"]) 
+    if RetRec.has_key("Kensu15"):
+      if RetRec["Kensu15"] is not None:
+        RetRec["KensuKei2"] +=  int(RetRec["Kensu15"]) 
+    if RetRec.has_key("Kensu17"):
+      if RetRec["Kensu17"] is not None:
+        RetRec["KensuKei2"] +=  int(RetRec["Kensu17"]) 
 
     return RetRec
 #------------------------------------------------------------------------------

@@ -62,6 +62,7 @@
 			<TD>{{ Rec.Naiyo|default_if_none:""|linebreaksbr }}</TD><!-- 内容詳細 -->
 			<TD>
 				<input type="submit" style="WIDTH:48px" Name="BtnDel{{ Rec.key }}"
+				onclick='return confirm("本当に削除しますか");'
 				value = "削除">
 			</TD>
 		</TR>

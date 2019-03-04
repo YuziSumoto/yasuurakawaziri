@@ -38,6 +38,16 @@ class DatKeika(db.Model):
 
     return
 
+  def DelRecOya(self,OyaKey): # 指定キーのデータ削除
+
+    Sql =  "SELECT * FROM " + self.__class__.__name__
+    Sql +=  " Where OyaKey = '" + OyaKey + "'"
+    Snap = db.GqlQuery(Sql)
+    for Rec in Snap:
+       Rec.delete()
+
+    return
+
   def GetLastBango(self,OyaKey,Hizuke): # 指定キー、日付の最終番号取得
 
     Sql =  "SELECT * FROM " + self.__class__.__name__

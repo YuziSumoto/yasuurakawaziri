@@ -14,6 +14,7 @@ import datetime # 日付モジュール
 
 from MstUser     import *   # 使用者マスタ
 from DatSoudan   import *   # 相談データ
+from DatKeika    import *   # 経過データ(相談データ削除時に該当データ削除)
 
 class MainHandler(webapp2.RequestHandler):
 
@@ -28,9 +29,14 @@ class MainHandler(webapp2.RequestHandler):
 
     LblMsg = ""
 
+    Kubun = self.request.cookies.get('Kubun', '1') # CooKie取得
+    cookieStr = 'Kubun=' + Kubun + ';'     # Cookie保存
+    self.response.headers.add_header('Set-Cookie', cookieStr.encode('shift-jis'))
+
     template_values = {
-      'Snap'    : DatSoudan().GetAll(),
-      'LblMsg' : LblMsg
+      'Snap'    : DatSoudan().GetAll(Kubun),
+      'Kubun'   : Kubun,
+      'LblMsg'  : LblMsg
       }
     path = os.path.join(os.path.dirname(__file__), 'Yasukawa300.html')
     self.response.out.write(template.render(path, template_values))
@@ -44,15 +50,21 @@ class MainHandler(webapp2.RequestHandler):
 
     LblMsg = ""
 
+    Kubun = self.request.get("Kubun","1")  # 画面選択
+    cookieStr = 'Kubun=' + Kubun + ';'     # Cookie保存
+    self.response.headers.add_header('Set-Cookie', cookieStr.encode('shift-jis'))
+
     for param in self.request.arguments():
-      if "BtnDel" in param:
+      if "BtnDel" in param:  # 削除
+        DatKeika().DelRecOya(param.replace("BtnDel",""))
         DatSoudan().DelRec(param.replace("BtnDel",""))
         LblMsg = u"削除しました"
 
     template_values = {
-                      'Snap'    : DatSoudan().GetAll(),
-                      'LblMsg' : LblMsg
-                      }
+      'Snap'    : DatSoudan().GetAll(Kubun),
+      'Kubun'   : Kubun,
+      'LblMsg' : LblMsg
+    }
     path = os.path.join(os.path.dirname(__file__), 'Yasukawa300.html')
     self.response.out.write(template.render(path, template_values))
 
